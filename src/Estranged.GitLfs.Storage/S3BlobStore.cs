@@ -32,19 +32,19 @@ namespace Estranged.GitLfs.Storage
             this.config = config;
         }
 
-        public GetPreSignedUrlRequest GenerateRequest(string Oid, HttpVerb verb) => new GetPreSignedUrlRequest
+        public GetPreSignedUrlRequest GenerateRequest(string Oid, HttpVerb verb, string mimeType) => new GetPreSignedUrlRequest
         {
             Verb = verb,
             BucketName = config.Bucket,
             Key = config.KeyPrefix + Oid,
             Protocol = config.Protocol,
-            ContentType = verb == HttpVerb.PUT ? "application/octet-stream" : null,
+            ContentType = mimeType,
             Expires = DateTime.UtcNow + config.Expiry
         };
 
         public Task<SignedBlob> UriForDownload(string Oid)
         {
-            GetPreSignedUrlRequest request = GenerateRequest(Oid, HttpVerb.GET);
+            GetPreSignedUrlRequest request = GenerateRequest(Oid, HttpVerb.GET, null);
             string signed = client.GetPreSignedURL(request);
 
             return Task.FromResult(new SignedBlob
@@ -56,7 +56,7 @@ namespace Estranged.GitLfs.Storage
 
         public Task<SignedBlob> UriForUpload(string Oid, long size)
         {
-            GetPreSignedUrlRequest request = GenerateRequest(Oid, HttpVerb.PUT);
+            GetPreSignedUrlRequest request = GenerateRequest(Oid, HttpVerb.PUT, StorageConstants.UploadMimeType);
             string signed = client.GetPreSignedURL(request);
 
             return Task.FromResult(new SignedBlob
