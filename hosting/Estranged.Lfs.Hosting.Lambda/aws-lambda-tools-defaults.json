@@ -1,0 +1,9 @@
+{
+	"profile"     : "",
+	"region"      : "",
+	"configuration" : "Release",
+	"framework"     : "netcoreapp1.0",
+	"s3-prefix"     : "Estranged.Lfs.Hosting.Lambda/",
+	"template"      : "serverless.template",
+	"template-parameters" : "ShouldCreateBucket=true;BucketName="
+}

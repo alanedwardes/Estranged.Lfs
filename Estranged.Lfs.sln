@@ -22,6 +22,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estranged.Lfs.Adapter.S3", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "adapters", "adapters", "{EA0D3055-6895-41CD-84F4-045CE9619186}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estranged.Lfs.Hosting.Lambda", "hosting\Estranged.Lfs.Hosting.Lambda\Estranged.Lfs.Hosting.Lambda.csproj", "{D4D0ABA0-A829-43C0-B3E8-C57AE9170ECF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{C38DD1A3-E930-4BF2-8BB2-ADFD66225B25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C38DD1A3-E930-4BF2-8BB2-ADFD66225B25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C38DD1A3-E930-4BF2-8BB2-ADFD66225B25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4D0ABA0-A829-43C0-B3E8-C57AE9170ECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4D0ABA0-A829-43C0-B3E8-C57AE9170ECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4D0ABA0-A829-43C0-B3E8-C57AE9170ECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4D0ABA0-A829-43C0-B3E8-C57AE9170ECF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,5 +59,6 @@ Global
 		{EAFEAA0F-678A-4888-9F32-45DA467A4CD5} = {03ED5016-F8BF-4C18-A997-2FFE0E6EF896}
 		{CE95E105-4980-4F65-915C-879692BC0F23} = {03ED5016-F8BF-4C18-A997-2FFE0E6EF896}
 		{C38DD1A3-E930-4BF2-8BB2-ADFD66225B25} = {EA0D3055-6895-41CD-84F4-045CE9619186}
+		{D4D0ABA0-A829-43C0-B3E8-C57AE9170ECF} = {89E5DA04-5E1C-410C-9175-27C0713594AD}
 	EndGlobalSection
 EndGlobal

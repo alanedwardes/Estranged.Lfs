@@ -18,7 +18,7 @@ namespace Estranged.Lfs.Data
         {
             IEnumerable<Task<SignedBlob>> uploadUriTasks = objects.Select(ob => blobAdapter.UriForUpload(ob.Oid, ob.Size));
 
-            SignedBlob[] signedBlobs = await Task.WhenAll(uploadUriTasks);
+            SignedBlob[] signedBlobs = await Task.WhenAll(uploadUriTasks).ConfigureAwait(false);
 
             return objects.Select((ob, index) => new ResponseObject
             {
@@ -40,7 +40,7 @@ namespace Estranged.Lfs.Data
         {
             IEnumerable<Task<SignedBlob>> downloadUriTasks = objects.Select(ob => blobAdapter.UriForDownload(ob.Oid));
 
-            SignedBlob[] signedBlobs = await Task.WhenAll(downloadUriTasks);
+            SignedBlob[] signedBlobs = await Task.WhenAll(downloadUriTasks).ConfigureAwait(false);
 
             return objects.Select((ob, index) => new ResponseObject
             {

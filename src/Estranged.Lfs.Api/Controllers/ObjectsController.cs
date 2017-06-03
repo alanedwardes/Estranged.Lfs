@@ -1,7 +1,6 @@
 ﻿using Estranged.Lfs.Api.Entities;
 using Estranged.Lfs.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,12 +10,10 @@ namespace Estranged.Lfs.Api.Controllers
     [Route("objects")]
     public class ObjectsController : ControllerBase
     {
-        private readonly ILogger<ObjectsController> logger;
         private readonly IObjectManager objectManager;
 
-        public ObjectsController(ILogger<ObjectsController> logger, IObjectManager objectManager)
+        public ObjectsController(IObjectManager objectManager)
         {
-            this.logger = logger;
             this.objectManager = objectManager;
         }
 

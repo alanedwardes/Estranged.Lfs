@@ -5,7 +5,7 @@ namespace Estranged.Lfs.Api
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddLfsApi(this IServiceCollection services)
+        public static IServiceCollection AddLfs(this IServiceCollection services)
         {
             services.AddMvcCore()
                     .AddGitLfs();

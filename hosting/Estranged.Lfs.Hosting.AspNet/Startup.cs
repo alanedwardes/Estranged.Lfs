@@ -24,7 +24,7 @@ namespace Estranged.Lfs.Hosting.AspNet
 
             services.AddSingleton<IAmazonS3>(x => new AmazonS3Client(new BasicAWSCredentials(credentials["s3:key"], credentials["s3:secret"]), Amazon.RegionEndpoint.EUWest2));
             services.AddSingleton<IBlobAdapter, S3BlobAdapter>();
-            services.AddLfsApi();
+            services.AddLfs();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
