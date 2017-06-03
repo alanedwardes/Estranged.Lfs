@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Formatters;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.DependencyInjection;
 using Narochno.Primitives.Json;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace Estranged.GitLfs.Api
             });
             mvcBuilder.AddMvcOptions(options =>
             {
+                options.Filters.Add(new ProducesAttribute(GitLfsConstants.GitLfsMediaType.MediaType));
+
                 JsonOutputFormatter jsonOutput = options.OutputFormatters.OfType<JsonOutputFormatter>().First();
                 jsonOutput.SupportedMediaTypes.Add(GitLfsConstants.GitLfsMediaType);
 

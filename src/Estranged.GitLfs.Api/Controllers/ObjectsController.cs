@@ -2,8 +2,8 @@
 using Estranged.GitLfs.Storage;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -28,27 +28,28 @@ namespace Estranged.GitLfs.Api.Controllers
             {
                 var downloadUriTasks = request.Objects.Select(ob => blobStore.UriForUpload(ob.Oid, ob.Size));
 
-                Uri[] downloadUris = await Task.WhenAll(downloadUriTasks);
+                SignedBlob[] signedBlobs = await Task.WhenAll(downloadUriTasks);
 
-                return new BatchResponse
+                BatchResponse response = new BatchResponse
                 {
                     Transfer = request.Transfers.First(), // TODO: this is not correct
                     Objects = request.Objects.Select((ob, index) => new ResponseObject
                     {
                         Oid = ob.Oid,
                         Size = ob.Size,
-                        Actions = new Dictionary<LfsOperation, Entities.Action>
+                        Authenticated = true,
+                        Actions = new Actions
                         {
+                            Upload = new Entities.Action
                             {
-                                LfsOperation.Upload,
-                                new Entities.Action
-                                {
-                                    Href = downloadUris[index]
-                                }
+                                Href = signedBlobs[index].Uri,
+                                ExpiresIn = (long)signedBlobs[index].Expiry.TotalSeconds
                             }
                         }
                     })
                 };
+                var test = JsonConvert.SerializeObject(response, Formatting.Indented);
+                return response;
             }
 
             throw new Exception("Method not implemented");

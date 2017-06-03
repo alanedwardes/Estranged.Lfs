@@ -5,14 +5,14 @@ namespace Estranged.GitLfs.Storage
 {
     public class DummyBlobStore : IBlobStore
     {
-        public Task<Uri> UriForDownload(string Oid)
+        public Task<SignedBlob> UriForDownload(string Oid)
         {
-            return Task.FromResult(new Uri("https://www.example.com/"));
+            return Task.FromResult(new SignedBlob());
         }
 
-        public Task<Uri> UriForUpload(string Oid, long size)
+        public Task<SignedBlob> UriForUpload(string Oid, long size)
         {
-            return Task.FromResult(new Uri("https://www.example.com/"));
+            return Task.FromResult(new SignedBlob());
         }
     }
 }

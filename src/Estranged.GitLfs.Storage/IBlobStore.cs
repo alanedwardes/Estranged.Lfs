@@ -3,9 +3,15 @@ using System.Threading.Tasks;
 
 namespace Estranged.GitLfs.Storage
 {
+    public class SignedBlob
+    {
+        public Uri Uri { get; set; }
+        public TimeSpan Expiry { get; set; }
+    }
+
     public interface IBlobStore
     {
-        Task<Uri> UriForUpload(string Oid, long size);
-        Task<Uri> UriForDownload(string Oid);
+        Task<SignedBlob> UriForUpload(string Oid, long size);
+        Task<SignedBlob> UriForDownload(string Oid);
     }
 }

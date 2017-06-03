@@ -23,7 +23,15 @@ namespace Estranged.GitLfs.Api.Entities
         [JsonProperty("authenticated")]
         public bool? Authenticated { get; set; }
         [JsonProperty("actions")]
-        public IDictionary<LfsOperation, Action> Actions { get; set; }
+        public Actions Actions { get; set; } = new Actions();
+    }
+
+    public class Actions
+    {
+        [JsonProperty("upload", NullValueHandling = NullValueHandling.Ignore)]
+        public Action Upload { get; set; }
+        [JsonProperty("download", NullValueHandling = NullValueHandling.Ignore)]
+        public Action Download { get; set; }
     }
 
     public class Action
@@ -33,8 +41,6 @@ namespace Estranged.GitLfs.Api.Entities
         [JsonProperty("header")]
         public IHeaderDictionary Headers { get; set; } = new HeaderDictionary();
         [JsonProperty("expires_in")]
-        public long? ExpiresIn { get; set; }
-        [JsonProperty("expires_at")]
-        public DateTime? ExpiresAt { get; set; }
+        public long ExpiresIn { get; set; }
     }
 }

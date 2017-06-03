@@ -22,5 +22,13 @@
     <ProjectReference Include="..\..\src\Estranged.GitLfs.Api\Estranged.GitLfs.Api.csproj" />
     <ProjectReference Include="..\..\src\Estranged.GitLfs.Storage\Estranged.GitLfs.Storage.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="credentials.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
 </Project>
