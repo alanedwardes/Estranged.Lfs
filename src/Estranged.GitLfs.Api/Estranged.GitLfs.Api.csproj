@@ -6,6 +6,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="1.0.0" />
+    <PackageReference Include="Narochno.Primitives" Version="2.6.6" />
+    <PackageReference Include="Narochno.Primitives.Json" Version="2.6.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Estranged.GitLfs.Storage\Estranged.GitLfs.Storage.csproj" />
   </ItemGroup>
 
 </Project>

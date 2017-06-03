@@ -1,23 +1,30 @@
-﻿using Newtonsoft.Json;
+﻿using Narochno.Primitives.Parsing;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace Estranged.GitLfs.Api.Entities
 {
-    public enum BatchOperation
+    public enum LfsOperation
     {
-        Unknown,
-        Upload
+        [EnumString("verify")]
+        Verify,
+        [EnumString("upload")]
+        Upload,
+        [EnumString("download")]
+        Download
     }
 
     public class BatchRequest
     {
         [JsonProperty("operation")]
-        public BatchOperation Operation { get; set; }
+        public LfsOperation Operation { get; set; }
+        [JsonProperty("transfers")]
+        public IList<string> Transfers { get; set; } = new List<string> { "basic" };
         [JsonProperty("objects")]
-        public IList<Object> Objects { get; set; }
+        public IList<RequestObject> Objects { get; set; }
     }
 
-    public class Object
+    public class RequestObject
     {
         [JsonProperty("oid")]
         public string Oid { get; set; }
