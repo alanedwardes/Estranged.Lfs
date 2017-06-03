@@ -38,7 +38,7 @@ namespace Estranged.GitLfs.Storage
             BucketName = config.Bucket,
             Key = config.KeyPrefix + Oid,
             Protocol = config.Protocol,
-            ContentType = "application/octet-stream",
+            ContentType = verb == HttpVerb.PUT ? "application/octet-stream" : null,
             Expires = DateTime.UtcNow + config.Expiry
         };
 
