@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Estranged.Lfs.Storage
+namespace Estranged.Lfs.Data
 {
     public class SignedBlob
     {

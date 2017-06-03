@@ -24,8 +24,8 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Estranged.Lfs.Adapter.S3\Estranged.Lfs.Adapter.S3.csproj" />
     <ProjectReference Include="..\..\src\Estranged.Lfs.Api\Estranged.Lfs.Api.csproj" />
-    <ProjectReference Include="..\..\src\Estranged.Lfs.Storage\Estranged.Lfs.Storage.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="credentials.json">

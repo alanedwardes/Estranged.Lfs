@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Estranged.Lfs.Api;
-using Estranged.Lfs.Storage;
 using Amazon.S3;
 using Amazon.Runtime;
 using Microsoft.Extensions.Configuration;
+using Estranged.Lfs.Adapter.S3;
+using Estranged.Lfs.Data;
 
 namespace Estranged.Lfs.Hosting.AspNet
 {

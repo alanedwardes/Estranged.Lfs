@@ -1,4 +1,4 @@
-﻿namespace Estranged.Lfs.Storage
+﻿namespace Estranged.Lfs.Data
 {
     public static class StorageConstants
     {

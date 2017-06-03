@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.4</TargetFramework>
+    <AssemblyName>Estranged.Lfs.Adapter.S3</AssemblyName>
+    <RootNamespace>Estranged.Lfs.Adapter.S3</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.S3" Version="3.3.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Estranged.Lfs.Data\Estranged.Lfs.Data.csproj" />
+  </ItemGroup>
+
+</Project>

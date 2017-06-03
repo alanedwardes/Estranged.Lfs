@@ -1,26 +1,11 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
+using Estranged.Lfs.Data;
 using System;
 using System.Threading.Tasks;
 
-namespace Estranged.Lfs.Storage
+namespace Estranged.Lfs.Adapter.S3
 {
-    public interface IS3BlobStoreConfig
-    {
-        string Bucket { get; }
-        string KeyPrefix { get; }
-        Protocol Protocol { get; }
-        TimeSpan Expiry { get; }
-    }
-
-    public class S3BlobStoreConfig : IS3BlobStoreConfig
-    {
-        public string Bucket { get; set; }
-        public string KeyPrefix { get; set; }
-        public Protocol Protocol { get; set; } = Protocol.HTTPS;
-        public TimeSpan Expiry { get; set; } = TimeSpan.FromHours(1);
-    }
-
     public class S3BlobStore : IBlobStore
     {
         private readonly IAmazonS3 client;

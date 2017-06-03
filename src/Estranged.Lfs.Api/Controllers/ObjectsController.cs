@@ -1,9 +1,9 @@
 ﻿using Estranged.Lfs.Api.Entities;
-using Estranged.Lfs.Storage;
+using Estranged.Lfs.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,7 +26,7 @@ namespace Estranged.Lfs.Api.Controllers
         {
             if (request.Operation == LfsOperation.Upload)
             {
-                var uploadUriTasks = request.Objects.Select(ob => blobStore.UriForUpload(ob.Oid, ob.Size));
+                IEnumerable<Task<SignedBlob>> uploadUriTasks = request.Objects.Select(ob => blobStore.UriForUpload(ob.Oid, ob.Size));
 
                 SignedBlob[] signedBlobs = await Task.WhenAll(uploadUriTasks);
 
@@ -52,7 +52,7 @@ namespace Estranged.Lfs.Api.Controllers
 
             if (request.Operation == LfsOperation.Download)
             {
-                var downloadUriTasks = request.Objects.Select(ob => blobStore.UriForDownload(ob.Oid));
+                IEnumerable<Task<SignedBlob>> downloadUriTasks = request.Objects.Select(ob => blobStore.UriForDownload(ob.Oid));
 
                 SignedBlob[] signedBlobs = await Task.WhenAll(downloadUriTasks);
 

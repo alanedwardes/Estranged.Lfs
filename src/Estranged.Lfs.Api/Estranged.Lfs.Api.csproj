@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Estranged.Lfs.Storage\Estranged.Lfs.Storage.csproj" />
+    <ProjectReference Include="..\Estranged.Lfs.Data\Estranged.Lfs.Data.csproj" />
   </ItemGroup>
 
 </Project>
