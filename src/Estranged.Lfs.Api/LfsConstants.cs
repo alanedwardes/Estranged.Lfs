@@ -4,6 +4,6 @@ namespace Estranged.Lfs.Api
 {
     public static class LfsConstants
     {
-        public static MediaTypeHeaderValue GitLfsMediaType => new MediaTypeHeaderValue("application/vnd.git-lfs+json");
+        public static MediaTypeHeaderValue LfsMediaType => new MediaTypeHeaderValue("application/vnd.git-lfs+json");
     }
 }

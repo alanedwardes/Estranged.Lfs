@@ -12,7 +12,7 @@ namespace Estranged.Lfs.Api
         public static IMvcCoreBuilder AddGitLfs(this IMvcCoreBuilder builder)
         {
             builder.AddJsonFormatters();
-            builder.AddApplicationPart(typeof(MvcBuilderExtensions).GetTypeInfo().Assembly);
+            builder.AddApplicationPart(typeof(LfsConstants).GetTypeInfo().Assembly);
             builder.AddJsonOptions(options =>
             {
                 options.SerializerSettings.Converters.Add(new EnumStringConverter());
@@ -20,13 +20,13 @@ namespace Estranged.Lfs.Api
             });
             builder.AddMvcOptions(options =>
             {
-                options.Filters.Add(new ProducesAttribute(LfsConstants.GitLfsMediaType.MediaType));
+                options.Filters.Add(new ProducesAttribute(LfsConstants.LfsMediaType.MediaType));
 
                 JsonOutputFormatter jsonOutput = options.OutputFormatters.OfType<JsonOutputFormatter>().First();
-                jsonOutput.SupportedMediaTypes.Add(LfsConstants.GitLfsMediaType);
+                jsonOutput.SupportedMediaTypes.Add(LfsConstants.LfsMediaType);
 
                 JsonInputFormatter jsonInput = options.InputFormatters.OfType<JsonInputFormatter>().First();
-                jsonInput.SupportedMediaTypes.Add(LfsConstants.GitLfsMediaType);
+                jsonInput.SupportedMediaTypes.Add(LfsConstants.LfsMediaType);
             });
             return builder;
         }
