@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
-namespace Estranged.Lfs.Api.Entities
+namespace Estranged.Lfs.Data.Entities
 {
     public class Action
     {
         [JsonProperty("href")]
         public Uri Href { get; set; }
         [JsonProperty("header")]
-        public IHeaderDictionary Headers { get; set; } = new HeaderDictionary();
+        public IDictionary<string, string> Headers { get; set; } = new Dictionary<string, string>();
         [JsonProperty("expires_in")]
         public long ExpiresIn { get; set; }
     }

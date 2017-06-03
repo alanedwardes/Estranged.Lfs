@@ -9,25 +9,26 @@ namespace Estranged.Lfs.Api
 {
     public static class MvcBuilderExtensions
     {
-        public static IMvcBuilder AddGitLfs(this IMvcBuilder mvcBuilder)
+        public static IMvcCoreBuilder AddGitLfs(this IMvcCoreBuilder builder)
         {
-            mvcBuilder.AddApplicationPart(typeof(MvcBuilderExtensions).GetTypeInfo().Assembly);
-            mvcBuilder.AddJsonOptions(options =>
+            builder.AddJsonFormatters();
+            builder.AddApplicationPart(typeof(MvcBuilderExtensions).GetTypeInfo().Assembly);
+            builder.AddJsonOptions(options =>
             {
                 options.SerializerSettings.Converters.Add(new EnumStringConverter());
                 options.SerializerSettings.Converters.Add(new OptionalJsonConverter());
             });
-            mvcBuilder.AddMvcOptions(options =>
+            builder.AddMvcOptions(options =>
             {
-                options.Filters.Add(new ProducesAttribute(GitLfsConstants.GitLfsMediaType.MediaType));
+                options.Filters.Add(new ProducesAttribute(LfsConstants.GitLfsMediaType.MediaType));
 
                 JsonOutputFormatter jsonOutput = options.OutputFormatters.OfType<JsonOutputFormatter>().First();
-                jsonOutput.SupportedMediaTypes.Add(GitLfsConstants.GitLfsMediaType);
+                jsonOutput.SupportedMediaTypes.Add(LfsConstants.GitLfsMediaType);
 
                 JsonInputFormatter jsonInput = options.InputFormatters.OfType<JsonInputFormatter>().First();
-                jsonInput.SupportedMediaTypes.Add(GitLfsConstants.GitLfsMediaType);
+                jsonInput.SupportedMediaTypes.Add(LfsConstants.GitLfsMediaType);
             });
-            return mvcBuilder;
+            return builder;
         }
     }
 }

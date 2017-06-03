@@ -3,7 +3,7 @@ using System;
 
 namespace Estranged.Lfs.Adapter.S3
 {
-    public class S3BlobStoreConfig : IS3BlobStoreConfig
+    public class S3BlobAdapterConfig : IS3BlobAdapterConfig
     {
         public string Bucket { get; set; }
         public string KeyPrefix { get; set; }

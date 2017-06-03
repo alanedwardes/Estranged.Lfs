@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace Estranged.Lfs.Adapter.S3
 {
-    public class S3BlobStore : IBlobStore
+    public class S3BlobAdapter : IBlobAdapter
     {
         private readonly IAmazonS3 client;
-        private readonly IS3BlobStoreConfig config;
+        private readonly IS3BlobAdapterConfig config;
 
-        public S3BlobStore(IAmazonS3 client, IS3BlobStoreConfig config)
+        public S3BlobAdapter(IAmazonS3 client, IS3BlobAdapterConfig config)
         {
             this.client = client;
             this.config = config;
         }
 
-        public GetPreSignedUrlRequest GenerateRequest(string Oid, HttpVerb verb, string mimeType) => new GetPreSignedUrlRequest
+        public GetPreSignedUrlRequest MakePreSignedUrl(string Oid, HttpVerb verb, string mimeType) => new GetPreSignedUrlRequest
         {
             Verb = verb,
             BucketName = config.Bucket,
@@ -29,7 +29,7 @@ namespace Estranged.Lfs.Adapter.S3
 
         public Task<SignedBlob> UriForDownload(string Oid)
         {
-            GetPreSignedUrlRequest request = GenerateRequest(Oid, HttpVerb.GET, null);
+            GetPreSignedUrlRequest request = MakePreSignedUrl(Oid, HttpVerb.GET, null);
             string signed = client.GetPreSignedURL(request);
 
             return Task.FromResult(new SignedBlob
@@ -41,7 +41,7 @@ namespace Estranged.Lfs.Adapter.S3
 
         public Task<SignedBlob> UriForUpload(string Oid, long size)
         {
-            GetPreSignedUrlRequest request = GenerateRequest(Oid, HttpVerb.PUT, StorageConstants.UploadMimeType);
+            GetPreSignedUrlRequest request = MakePreSignedUrl(Oid, HttpVerb.PUT, BlobConstants.UploadMimeType);
             string signed = client.GetPreSignedURL(request);
 
             return Task.FromResult(new SignedBlob

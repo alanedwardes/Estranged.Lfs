@@ -15,7 +15,7 @@ namespace Estranged.Lfs.Hosting.AspNet
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IS3BlobStoreConfig>(x => new S3BlobStoreConfig
+            services.AddSingleton<IS3BlobAdapterConfig>(x => new S3BlobAdapterConfig
             {
                 Bucket = "estranged-lfs-test"
             });
@@ -23,8 +23,8 @@ namespace Estranged.Lfs.Hosting.AspNet
             IConfiguration credentials = new ConfigurationBuilder().AddJsonFile("credentials.json").Build();
 
             services.AddSingleton<IAmazonS3>(x => new AmazonS3Client(new BasicAWSCredentials(credentials["s3:key"], credentials["s3:secret"]), Amazon.RegionEndpoint.EUWest2));
-            services.AddSingleton<IBlobStore, S3BlobStore>();
-            services.AddMvc().AddGitLfs();
+            services.AddSingleton<IBlobAdapter, S3BlobAdapter>();
+            services.AddLfsApi();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

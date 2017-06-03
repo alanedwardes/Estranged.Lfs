@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Estranged.Lfs.Api.Entities
+namespace Estranged.Lfs.Data.Entities
 {
     public class ResponseObject
     {
