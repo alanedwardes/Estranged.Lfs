@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Estranged.GitLfs.Controllers
+namespace Estranged.Lfs.Api.Controllers
 {
     [Route("locks")]
     public class LocksController : ControllerBase

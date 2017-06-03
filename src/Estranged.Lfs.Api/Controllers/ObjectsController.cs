@@ -1,5 +1,5 @@
-﻿using Estranged.GitLfs.Api.Entities;
-using Estranged.GitLfs.Storage;
+﻿using Estranged.Lfs.Api.Entities;
+using Estranged.Lfs.Storage;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -7,7 +7,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Estranged.GitLfs.Api.Controllers
+namespace Estranged.Lfs.Api.Controllers
 {
     [Route("objects")]
     public class ObjectsController : ControllerBase

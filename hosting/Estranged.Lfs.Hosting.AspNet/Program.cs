@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 
-namespace Estranged.GitLfs.Hosting.AspNet
+namespace Estranged.Lfs.Hosting.AspNet
 {
     public class Program
     {

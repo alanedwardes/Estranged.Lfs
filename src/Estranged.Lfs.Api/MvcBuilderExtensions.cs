@@ -5,7 +5,7 @@ using Narochno.Primitives.Json;
 using System.Linq;
 using System.Reflection;
 
-namespace Estranged.GitLfs.Api
+namespace Estranged.Lfs.Api
 {
     public static class MvcBuilderExtensions
     {

@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Estranged.GitLfs.Api;
-using Estranged.GitLfs.Storage;
+using Estranged.Lfs.Api;
+using Estranged.Lfs.Storage;
 using Amazon.S3;
 using Amazon.Runtime;
 using Microsoft.Extensions.Configuration;
 
-namespace Estranged.GitLfs.Hosting.AspNet
+namespace Estranged.Lfs.Hosting.AspNet
 {
     public class Startup
     {

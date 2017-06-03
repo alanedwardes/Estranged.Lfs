@@ -1,4 +1,4 @@
-﻿namespace Estranged.GitLfs.Storage
+﻿namespace Estranged.Lfs.Storage
 {
     public static class StorageConstants
     {

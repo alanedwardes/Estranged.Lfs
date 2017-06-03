@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Estranged.GitLfs.Api.Entities
+namespace Estranged.Lfs.Api.Entities
 {
     public class BatchResponse
     {

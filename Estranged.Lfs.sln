@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{03ED5016-F8BF-4C18-A997-2FFE0E6EF896}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hosting", "hosting", "{89E5DA04-5E1C-410C-9175-27C0713594AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7C2BE024-CCB9-4F3E-9032-E5A472857C27}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estranged.Lfs.Hosting.AspNet", "hosting\Estranged.Lfs.Hosting.AspNet\Estranged.Lfs.Hosting.AspNet.csproj", "{948329E9-DE90-4245-8C2E-BCD23746056A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estranged.Lfs.Api", "src\Estranged.Lfs.Api\Estranged.Lfs.Api.csproj", "{EAFEAA0F-678A-4888-9F32-45DA467A4CD5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estranged.Lfs.Storage", "src\Estranged.Lfs.Storage\Estranged.Lfs.Storage.csproj", "{05AF215A-95A0-4B56-86C0-35A5DB2E1725}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{948329E9-DE90-4245-8C2E-BCD23746056A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{948329E9-DE90-4245-8C2E-BCD23746056A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{948329E9-DE90-4245-8C2E-BCD23746056A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{948329E9-DE90-4245-8C2E-BCD23746056A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAFEAA0F-678A-4888-9F32-45DA467A4CD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAFEAA0F-678A-4888-9F32-45DA467A4CD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAFEAA0F-678A-4888-9F32-45DA467A4CD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAFEAA0F-678A-4888-9F32-45DA467A4CD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05AF215A-95A0-4B56-86C0-35A5DB2E1725}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05AF215A-95A0-4B56-86C0-35A5DB2E1725}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05AF215A-95A0-4B56-86C0-35A5DB2E1725}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05AF215A-95A0-4B56-86C0-35A5DB2E1725}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{948329E9-DE90-4245-8C2E-BCD23746056A} = {89E5DA04-5E1C-410C-9175-27C0713594AD}
+		{EAFEAA0F-678A-4888-9F32-45DA467A4CD5} = {03ED5016-F8BF-4C18-A997-2FFE0E6EF896}
+		{05AF215A-95A0-4B56-86C0-35A5DB2E1725} = {03ED5016-F8BF-4C18-A997-2FFE0E6EF896}
+	EndGlobalSection
+EndGlobal

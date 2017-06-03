@@ -3,7 +3,7 @@ using Amazon.S3.Model;
 using System;
 using System.Threading.Tasks;
 
-namespace Estranged.GitLfs.Storage
+namespace Estranged.Lfs.Storage
 {
     public interface IS3BlobStoreConfig
     {

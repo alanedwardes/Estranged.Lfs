@@ -1,7 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace Estranged.GitLfs.Storage
+namespace Estranged.Lfs.Storage
 {
     public class DummyBlobStore : IBlobStore
     {

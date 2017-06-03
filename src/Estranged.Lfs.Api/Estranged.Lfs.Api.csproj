@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Estranged.GitLfs.Storage\Estranged.GitLfs.Storage.csproj" />
+    <ProjectReference Include="..\Estranged.Lfs.Storage\Estranged.Lfs.Storage.csproj" />
   </ItemGroup>
 
 </Project>

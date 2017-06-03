@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace Estranged.GitLfs.Api.Entities
+namespace Estranged.Lfs.Api.Entities
 {
     public enum LfsOperation
     {

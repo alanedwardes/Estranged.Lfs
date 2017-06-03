@@ -19,11 +19,13 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Estranged.GitLfs.Api\Estranged.GitLfs.Api.csproj" />
-    <ProjectReference Include="..\..\src\Estranged.GitLfs.Storage\Estranged.GitLfs.Storage.csproj" />
+    <Folder Include="Properties\" />
+    <Folder Include="Properties\" />
+    <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <ProjectReference Include="..\..\src\Estranged.Lfs.Api\Estranged.Lfs.Api.csproj" />
+    <ProjectReference Include="..\..\src\Estranged.Lfs.Storage\Estranged.Lfs.Storage.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="credentials.json">

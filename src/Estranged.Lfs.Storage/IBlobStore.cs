@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Estranged.GitLfs.Storage
+namespace Estranged.Lfs.Storage
 {
     public class SignedBlob
     {

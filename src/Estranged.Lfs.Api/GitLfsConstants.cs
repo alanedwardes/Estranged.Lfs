@@ -1,6 +1,6 @@
 ﻿using Microsoft.Net.Http.Headers;
 
-namespace Estranged.GitLfs.Api
+namespace Estranged.Lfs.Api
 {
     public static class GitLfsConstants
     {
