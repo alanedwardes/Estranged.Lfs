@@ -32,9 +32,15 @@ namespace Estranged.Lfs.Adapter.S3
             GetPreSignedUrlRequest request = MakePreSignedUrl(Oid, HttpVerb.GET, null);
             string signed = client.GetPreSignedURL(request);
 
+            var builder = new UriBuilder(signed);
+            if (!string.IsNullOrWhiteSpace(config.AccessHost))
+            {
+                builder.Host = config.AccessHost;
+            }
+
             return Task.FromResult(new SignedBlob
             {
-                Uri = new Uri(signed),
+                Uri = builder.Uri,
                 Expiry = config.Expiry
             });
         }
@@ -44,9 +50,15 @@ namespace Estranged.Lfs.Adapter.S3
             GetPreSignedUrlRequest request = MakePreSignedUrl(Oid, HttpVerb.PUT, BlobConstants.UploadMimeType);
             string signed = client.GetPreSignedURL(request);
 
+            var builder = new UriBuilder(signed);
+            if (!string.IsNullOrWhiteSpace(config.AccessHost))
+            {
+                builder.Host = config.AccessHost;
+            }
+
             return Task.FromResult(new SignedBlob
             {
-                Uri = new Uri(signed),
+                Uri = builder.Uri,
                 Expiry = config.Expiry
             });
         }

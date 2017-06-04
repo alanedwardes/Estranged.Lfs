@@ -5,6 +5,7 @@ namespace Estranged.Lfs.Adapter.S3
 {
     public interface IS3BlobAdapterConfig
     {
+        string AccessHost { get; }
         string Bucket { get; }
         string KeyPrefix { get; }
         Protocol Protocol { get; }
