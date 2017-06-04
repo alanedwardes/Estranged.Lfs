@@ -1,1 +1,1 @@
-# Estranged.GitLfs
+# Estranged.Lfs
