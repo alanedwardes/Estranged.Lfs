@@ -1,8 +1,5 @@
 ﻿using Estranged.Lfs.Api.Filters;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.DependencyInjection;
 using Narochno.Primitives.Json;
@@ -17,7 +14,7 @@ namespace Estranged.Lfs.Api
         {
             builder.AddJsonFormatters();
             builder.AddApplicationPart(typeof(LfsConstants).GetTypeInfo().Assembly);
-            builder.AddJsonOptions(options =>
+            builder.Services.Configure<MvcJsonOptions>(options =>
             {
                 options.SerializerSettings.Converters.Add(new EnumStringConverter());
                 options.SerializerSettings.Converters.Add(new OptionalJsonConverter());
