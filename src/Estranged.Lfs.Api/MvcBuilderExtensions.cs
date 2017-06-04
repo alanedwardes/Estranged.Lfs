@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Estranged.Lfs.Api.Filters;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.DependencyInjection;
 using Narochno.Primitives.Json;
@@ -21,6 +25,7 @@ namespace Estranged.Lfs.Api
             builder.AddMvcOptions(options =>
             {
                 options.Filters.Add(new ProducesAttribute(LfsConstants.LfsMediaType.MediaType));
+                options.Filters.Add(new TypeFilterAttribute(typeof(BasicAuthFilter)));
 
                 JsonOutputFormatter jsonOutput = options.OutputFormatters.OfType<JsonOutputFormatter>().First();
                 jsonOutput.SupportedMediaTypes.Add(LfsConstants.LfsMediaType);

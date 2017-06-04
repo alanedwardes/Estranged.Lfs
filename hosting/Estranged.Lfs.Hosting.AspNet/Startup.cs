@@ -8,6 +8,7 @@ using Amazon.Runtime;
 using Microsoft.Extensions.Configuration;
 using Estranged.Lfs.Adapter.S3;
 using Estranged.Lfs.Data;
+using System.Collections.Generic;
 
 namespace Estranged.Lfs.Hosting.AspNet
 {
@@ -24,6 +25,7 @@ namespace Estranged.Lfs.Hosting.AspNet
 
             services.AddSingleton<IAmazonS3>(x => new AmazonS3Client(new BasicAWSCredentials(credentials["s3:key"], credentials["s3:secret"]), Amazon.RegionEndpoint.EUWest2));
             services.AddSingleton<IBlobAdapter, S3BlobAdapter>();
+            services.AddSingleton<IAuthenticator>(x => new DictionaryAuthenticator(new Dictionary<string, string> { { "usernametest", "passwordtest" } }));
             services.AddLfs();
         }
 
