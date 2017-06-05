@@ -5,6 +5,7 @@
     <TargetFramework>netstandard1.6</TargetFramework>
     <Authors>alanedwardes</Authors>
     <Description>A Git LFS server implementation in C# designed to run in a serverless environment.</Description>
+    <PackageId>Estranged.Lfs.Api</PackageId>
     <PackageProjectUrl>https://github.com/alanedwardes/Estranged.Lfs</PackageProjectUrl>
     <PackageTags>git lfs aspnet core</PackageTags>
     <AssemblyName>Estranged.Lfs.Api</AssemblyName>
