@@ -1,12 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Version>1.0.0</Version>
     <TargetFramework>netstandard1.6</TargetFramework>
-    <AssemblyName>Estranged.Lfs.Adapter.S3</AssemblyName>
-    <RootNamespace>Estranged.Lfs.Adapter.S3</RootNamespace>
-    <PackageProjectUrl>https://github.com/alanedwardes/Estranged.Lfs</PackageProjectUrl>
     <Authors>alanedwardes</Authors>
     <Description>An S3 adapter for Estranged.Lfs.Api.</Description>
+    <PackageProjectUrl>https://github.com/alanedwardes/Estranged.Lfs</PackageProjectUrl>
+    <PackageTags>git lfs s3</PackageTags>
+    <AssemblyName>Estranged.Lfs.Adapter.S3</AssemblyName>
+    <RootNamespace>Estranged.Lfs.Adapter.S3</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
