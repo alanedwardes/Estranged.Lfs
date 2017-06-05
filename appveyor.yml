@@ -1,0 +1,33 @@
+version: '{build}'
+image: Visual Studio 2017
+
+pull_requests:
+  do_not_increment_build_number: true
+
+branches:
+  only:
+  - master
+
+nuget:
+  disable_publish_on_pr: true
+
+before_build:
+  - cmd: dotnet restore
+
+after_build:
+- dotnet pack "src\Estranged.Lfs.Api" -c Release
+- dotnet pack "src\Estranged.Lfs.Adapter.S3" -c Release
+
+#test_script:
+#- dotnet test "test\Narochno.Primitives.Tests\Narochno.Primitives.Tests.csproj"
+#- dotnet test "test\Narochno.Primitives.Json.Tests\Narochno.Primitives.Json.Tests.csproj"
+
+artifacts:
+- path: src\Estranged.Lfs.Api\bin\Release\*.nupkg
+- path: src\Estranged.Lfs.Adapter.S3\bin\Release\*.nupkg
+
+deploy:
+  - provider: Environment
+    name: nuget.org
+    on:
+      branch: master
