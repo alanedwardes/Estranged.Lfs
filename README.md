@@ -1,8 +1,7 @@
-# Estranged.Lfs
+# Estranged.Lfs [![Build status](https://ci.appveyor.com/api/projects/status/q5rkhprtqviyurlx?svg=true)](https://ci.appveyor.com/project/alanedwardes/estranged-lfs)
 A Git LFS backend which provides pluggable authentication and blob store adapters. It is designed to run in a serverless environment to be used in conjunction with a Git provider such as GitHub or BitBucket, or self hosted Git.
 
 ## Basic Usage
-
 1. Add the Git LFS services to your application:
 ```csharp
 services.AddLfs();
