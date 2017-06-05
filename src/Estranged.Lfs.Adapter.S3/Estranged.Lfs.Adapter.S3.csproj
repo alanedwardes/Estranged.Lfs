@@ -1,9 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
+    <TargetFramework>netstandard1.6</TargetFramework>
     <AssemblyName>Estranged.Lfs.Adapter.S3</AssemblyName>
     <RootNamespace>Estranged.Lfs.Adapter.S3</RootNamespace>
+    <PackageProjectUrl>https://github.com/alanedwardes/Estranged.Lfs</PackageProjectUrl>
+    <Authors>alanedwardes</Authors>
+    <Description>An S3 adapter for Estranged.Lfs.Api.</Description>
   </PropertyGroup>
 
   <ItemGroup>
