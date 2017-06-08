@@ -17,7 +17,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="1.0.4" />
     <PackageReference Include="Narochno.Primitives" Version="2.6.6" />
     <PackageReference Include="Narochno.Primitives.Json" Version="2.6.6" />
-    <PackageReference Include="Estranged.Lfs.Data" Version="1.1.0"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Estranged.Lfs.Data\Estranged.Lfs.Data.csproj" />
   </ItemGroup>
 
 </Project>
