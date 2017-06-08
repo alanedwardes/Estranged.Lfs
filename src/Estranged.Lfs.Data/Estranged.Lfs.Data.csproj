@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <TargetFramework>netstandard1.6</TargetFramework>
     <Authors>alanedwardes</Authors>
     <Description>A Git LFS server implementation in C# designed to run in a serverless environment.</Description>
