@@ -16,14 +16,12 @@ before_build:
 
 after_build:
 - dotnet pack "src\Estranged.Lfs.Api" -c Release
+- dotnet pack "src\Estranged.Lfs.Data" -c Release
 - dotnet pack "src\Estranged.Lfs.Adapter.S3" -c Release
-
-#test_script:
-#- dotnet test "test\Narochno.Primitives.Tests\Narochno.Primitives.Tests.csproj"
-#- dotnet test "test\Narochno.Primitives.Json.Tests\Narochno.Primitives.Json.Tests.csproj"
 
 artifacts:
 - path: src\Estranged.Lfs.Api\bin\Release\*.nupkg
+- path: src\Estranged.Lfs.Data\bin\Release\*.nupkg
 - path: src\Estranged.Lfs.Adapter.S3\bin\Release\*.nupkg
 
 deploy:
