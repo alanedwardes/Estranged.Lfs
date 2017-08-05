@@ -7,6 +7,8 @@ using Estranged.Lfs.Adapter.S3;
 using Amazon.S3;
 using Estranged.Lfs.Data;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
+using System;
 
 namespace Estranged.Lfs.Hosting.Lambda
 {
@@ -14,14 +16,19 @@ namespace Estranged.Lfs.Hosting.Lambda
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IS3BlobAdapterConfig>(x => new S3BlobAdapterConfig
-            {
-                Bucket = "estranged-lfs-test"
-            });
+            var config = new ConfigurationBuilder()
+                .AddEnvironmentVariables()
+                .Build();
+
+            string LfsBucket = config["LFS_BUCKET"] ?? throw new InvalidOperationException("Missing environment variable LFS_BUCKET");
+            string LfsUsername = config["LFS_USERNAME"] ?? throw new InvalidOperationException("Missing environment variable LFS_USERNAME");
+            string LfsPassword = config["LFS_PASSWORD"] ?? throw new InvalidOperationException("Missing environment variable LFS_PASSWORD");
+
+            services.AddSingleton<IS3BlobAdapterConfig>(x => new S3BlobAdapterConfig { Bucket = LfsBucket });
+            services.AddSingleton<IAuthenticator>(x => new DictionaryAuthenticator(new Dictionary<string, string> { { LfsUsername, LfsPassword } }));
 
             services.AddSingleton<IAmazonS3>(x => new AmazonS3Client());
             services.AddSingleton<IBlobAdapter, S3BlobAdapter>();
-            services.AddSingleton<IAuthenticator>(x => new DictionaryAuthenticator(new Dictionary<string, string> { { "usernametest", "passwordtest" } }));
             services.AddLfs();
         }
 
