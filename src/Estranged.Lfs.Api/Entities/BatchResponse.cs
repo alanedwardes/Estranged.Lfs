@@ -1,15 +1,16 @@
 ﻿using Estranged.Lfs.Data.Entities;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace Estranged.Lfs.Api.Entities
 {
+    [DataContract]
     public class BatchResponse
     {
-        [JsonProperty("transfer")]
+        [DataMember(Name = "transfer")]
         public string Transfer { get; set; } = "basic";
-        [JsonProperty("objects")]
+        [DataMember(Name = "objects")]
         public IEnumerable<ResponseObject> Objects { get; set; } = Enumerable.Empty<ResponseObject>();
     }
 }

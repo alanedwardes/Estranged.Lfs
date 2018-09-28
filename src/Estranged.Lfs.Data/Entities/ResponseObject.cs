@@ -1,16 +1,17 @@
-﻿using Newtonsoft.Json;
+﻿using System.Runtime.Serialization;
 
 namespace Estranged.Lfs.Data.Entities
 {
+    [DataContract]
     public class ResponseObject
     {
-        [JsonProperty("oid")]
+        [DataMember(Name = "oid")]
         public string Oid { get; set; }
-        [JsonProperty("size")]
+        [DataMember(Name = "size")]
         public long Size { get; set; }
-        [JsonProperty("authenticated")]
+        [DataMember(Name = "authenticated")]
         public bool? Authenticated { get; set; }
-        [JsonProperty("actions")]
+        [DataMember(Name = "actions")]
         public Actions Actions { get; set; } = new Actions();
     }
 }

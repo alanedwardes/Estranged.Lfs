@@ -1,14 +1,14 @@
-﻿using Narochno.Primitives.Parsing;
+﻿using System.Runtime.Serialization;
 
 namespace Estranged.Lfs.Api.Entities
 {
     public enum LfsOperation
     {
-        [EnumString("verify")]
+        [EnumMember]
         Verify,
-        [EnumString("upload")]
+        [EnumMember]
         Upload,
-        [EnumString("download")]
+        [EnumMember]
         Download
     }
 }

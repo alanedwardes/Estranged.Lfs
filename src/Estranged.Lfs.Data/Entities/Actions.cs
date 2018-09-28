@@ -1,12 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿using System.Runtime.Serialization;
 
 namespace Estranged.Lfs.Data.Entities
 {
+    [DataContract]
     public class Actions
     {
-        [JsonProperty("upload", NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "upload", EmitDefaultValue = false)]
         public Action Upload { get; set; }
-        [JsonProperty("download", NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "download", EmitDefaultValue = false)]
         public Action Download { get; set; }
     }
 }

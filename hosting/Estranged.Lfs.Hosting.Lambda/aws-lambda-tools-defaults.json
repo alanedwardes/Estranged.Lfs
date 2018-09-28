@@ -1,14 +1,14 @@
-
 {
-    "profile" : "ae-lambda-publish",
-    "region"  : "eu-west-1",
-    "configuration" : "Release",
-    "framework"     : "netcoreapp1.0",
-    "s3-prefix"     : "Estranged.Lfs.Hosting.Lambda/",
-    "function-name" : "EstrangedLfsHostingLambda",
-    "function-handler" : "Estranged.Lfs.Hosting.Lambda::Estranged.Lfs.Hosting.Lambda.LambdaEntryPoint::FunctionHandlerAsync",
-    "function-memory-size" : 256,
-    "function-timeout"     : 10,
-    "function-runtime"     : "dotnetcore1.0",
-    "environment-variables" : ""
+  "profile": "ae-lambda-publish",
+  "region": "eu-west-1",
+  "configuration": "Release",
+  "framework": "netcoreapp2.1",
+  "s3-prefix": "Estranged.Lfs.Hosting.Lambda/",
+  "s3-bucket": "ae-temp",
+  "function-name": "EstrangedLambdaLfs",
+  "function-handler": "Estranged.Lfs.Hosting.Lambda::Estranged.Lfs.Hosting.Lambda.LambdaEntryPoint::FunctionHandlerAsync",
+  "function-memory-size": 256,
+  "function-timeout": 10,
+  "function-runtime": "dotnetcore2.1",
+  "environment-variables": ""
 }
