@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>2.0.0</Version>
+    <Version>2.1.0</Version>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>alanedwardes</Authors>
     <Description>An S3 adapter for Estranged.Lfs.Api.</Description>
