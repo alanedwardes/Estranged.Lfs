@@ -30,7 +30,8 @@ namespace Estranged.Lfs.Data
                     Upload = new Action
                     {
                         Href = signedBlobs[index].Uri,
-                        ExpiresIn = (long)signedBlobs[index].Expiry.TotalSeconds
+                        ExpiresIn = (long)signedBlobs[index].Expiry.TotalSeconds,
+                        Headers = signedBlobs[index].Headers
                     }
                 }
             });
@@ -52,7 +53,8 @@ namespace Estranged.Lfs.Data
                     Download = new Action
                     {
                         Href = signedBlobs[index].Uri,
-                        ExpiresIn = (long)signedBlobs[index].Expiry.TotalSeconds
+                        ExpiresIn = (long)signedBlobs[index].Expiry.TotalSeconds,
+                        Headers = signedBlobs[index].Headers
                     }
                 }
             });

@@ -2,6 +2,6 @@
 {
     public static class BlobConstants
     {
-        public static string UploadMimeType => "application/octet-stream";
+        public const string UploadMimeType = "application/octet-stream";
     }
 }
