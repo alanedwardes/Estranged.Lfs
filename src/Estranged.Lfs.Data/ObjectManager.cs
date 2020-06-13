@@ -42,7 +42,7 @@ namespace Estranged.Lfs.Data
             var responseObjects = new List<ResponseObject>();
             foreach ((RequestObject requestObject, Task<SignedBlob> signedBlobTask) in objects.Select(x => (x, blobAdapter.UriForDownload(x.Oid))))
             {
-                var signedBlob = await signedBlobTask;
+                var signedBlob = await signedBlobTask.ConfigureAwait(false);
 
                 var responseObject = new ResponseObject();
 
