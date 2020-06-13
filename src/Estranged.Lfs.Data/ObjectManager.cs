@@ -39,25 +39,23 @@ namespace Estranged.Lfs.Data
 
         public async Task<IEnumerable<ResponseObject>> DownloadObjects(IList<RequestObject> objects)
         {
-            IReadOnlyDictionary<RequestObject, Task<SignedBlob>> objectTaskPairs = objects.ToDictionary(x => x, x => blobAdapter.UriForDownload(x.Oid));
-
             var responseObjects = new List<ResponseObject>();
-            foreach (var objectTaskPair in objectTaskPairs)
+            foreach ((RequestObject requestObject, Task<SignedBlob> signedBlobTask) in objects.Select(x => (x, blobAdapter.UriForDownload(x.Oid))))
             {
-                var blob = await objectTaskPair.Value;
+                var signedBlob = await signedBlobTask;
 
                 var responseObject = new ResponseObject();
 
-                if (blob.ErrorCode.HasValue)
+                if (signedBlob.ErrorCode.HasValue)
                 {
                     responseObjects.Add(new ResponseObject
                     {
-                        Oid = objectTaskPair.Key.Oid,
-                        Size = objectTaskPair.Key.Size,
+                        Oid = requestObject.Oid,
+                        Size = requestObject.Size,
                         Error = new ResponseObjectError
                         {
-                            Code = blob.ErrorCode.Value,
-                            Message = blob.ErrorMessage
+                            Code = signedBlob.ErrorCode.Value,
+                            Message = signedBlob.ErrorMessage
                         }
                     });
                 }
@@ -65,16 +63,16 @@ namespace Estranged.Lfs.Data
                 {
                     responseObjects.Add(new ResponseObject
                     {
-                        Oid = objectTaskPair.Key.Oid,
-                        Size = blob.Size.Value,
+                        Oid = requestObject.Oid,
+                        Size = signedBlob.Size.Value,
                         Authenticated = true,
                         Actions = new Actions
                         {
                             Download = new Action
                             {
-                                Href = blob.Uri,
-                                ExpiresIn = (long)blob.Expiry.TotalSeconds,
-                                Headers = blob.Headers
+                                Href = signedBlob.Uri,
+                                ExpiresIn = (long)signedBlob.Expiry.TotalSeconds,
+                                Headers = signedBlob.Headers
                             }
                         }
                     });
