@@ -39,25 +39,49 @@ namespace Estranged.Lfs.Data
 
         public async Task<IEnumerable<ResponseObject>> DownloadObjects(IList<RequestObject> objects)
         {
-            IEnumerable<Task<SignedBlob>> downloadUriTasks = objects.Select(ob => blobAdapter.UriForDownload(ob.Oid));
+            IReadOnlyDictionary<RequestObject, Task<SignedBlob>> objectTaskPairs = objects.ToDictionary(x => x, x => blobAdapter.UriForDownload(x.Oid));
 
-            SignedBlob[] signedBlobs = await Task.WhenAll(downloadUriTasks).ConfigureAwait(false);
-
-            return objects.Select((ob, index) => new ResponseObject
+            var responseObjects = new List<ResponseObject>();
+            foreach (var objectTaskPair in objectTaskPairs)
             {
-                Oid = ob.Oid,
-                Size = ob.Size,
-                Authenticated = true,
-                Actions = new Actions
+                var blob = await objectTaskPair.Value;
+
+                var responseObject = new ResponseObject();
+
+                if (blob.ErrorCode.HasValue)
                 {
-                    Download = new Action
+                    responseObjects.Add(new ResponseObject
                     {
-                        Href = signedBlobs[index].Uri,
-                        ExpiresIn = (long)signedBlobs[index].Expiry.TotalSeconds,
-                        Headers = signedBlobs[index].Headers
-                    }
+                        Oid = objectTaskPair.Key.Oid,
+                        Size = objectTaskPair.Key.Size,
+                        Error = new ResponseObjectError
+                        {
+                            Code = blob.ErrorCode.Value,
+                            Message = blob.ErrorMessage
+                        }
+                    });
                 }
-            });
+                else
+                {
+                    responseObjects.Add(new ResponseObject
+                    {
+                        Oid = objectTaskPair.Key.Oid,
+                        Size = blob.Size.Value,
+                        Authenticated = true,
+                        Actions = new Actions
+                        {
+                            Download = new Action
+                            {
+                                Href = blob.Uri,
+                                ExpiresIn = (long)blob.Expiry.TotalSeconds,
+                                Headers = blob.Headers
+                            }
+                        }
+                    });
+                }
+            }
+
+            return responseObjects;
         }
     }
 }

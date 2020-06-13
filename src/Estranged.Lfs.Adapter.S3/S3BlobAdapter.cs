@@ -28,16 +28,31 @@ namespace Estranged.Lfs.Adapter.S3
             Expires = DateTime.UtcNow + config.Expiry
         };
 
-        public Task<SignedBlob> UriForDownload(string oid)
+        public async Task<SignedBlob> UriForDownload(string oid)
         {
+            GetObjectMetadataResponse metadataResponse;
+            try
+            {
+                metadataResponse = await client.GetObjectMetadataAsync(config.Bucket, config.KeyPrefix + oid).ConfigureAwait(false);
+            }
+            catch (AmazonS3Exception ex)
+            {
+                return new SignedBlob
+                {
+                    ErrorCode = (int)ex.StatusCode,
+                    ErrorMessage = "Problem getting object"
+                };
+            }
+
             GetPreSignedUrlRequest request = MakePreSignedUrl(oid, HttpVerb.GET, null);
             string signed = client.GetPreSignedURL(request);
 
-            return Task.FromResult(new SignedBlob
+            return new SignedBlob
             {
                 Uri = new Uri(signed),
+                Size = metadataResponse.ContentLength,
                 Expiry = config.Expiry
-            });
+            };
         }
 
         public Task<SignedBlob> UriForUpload(string oid, long size)
