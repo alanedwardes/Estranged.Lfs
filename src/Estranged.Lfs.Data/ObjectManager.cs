@@ -44,8 +44,6 @@ namespace Estranged.Lfs.Data
             {
                 var signedBlob = await signedBlobTask.ConfigureAwait(false);
 
-                var responseObject = new ResponseObject();
-
                 if (signedBlob.ErrorCode.HasValue)
                 {
                     responseObjects.Add(new ResponseObject

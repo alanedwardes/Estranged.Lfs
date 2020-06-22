@@ -10,6 +10,7 @@
     <PackageTags>git lfs s3</PackageTags>
     <AssemblyName>Estranged.Lfs.Adapter.S3</AssemblyName>
     <RootNamespace>Estranged.Lfs.Adapter.S3</RootNamespace>
+    <WarningsAsErrors>true</WarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
