@@ -26,21 +26,21 @@ namespace Estranged.Lfs.Api.Filters
             IHeaderDictionary headers = context.HttpContext.Request.Headers;
             if (!headers.ContainsKey(AuthorizationHeader))
             {
-                context.Result = new StatusCodeResult(403);
+                context.Result = new StatusCodeResult(401);
                 return;
             }
 
             string[] authValues = headers[AuthorizationHeader].ToArray();
             if (authValues.Length != 1)
             {
-                context.Result = new StatusCodeResult(403);
+                context.Result = new StatusCodeResult(401);
                 return;
             }
 
             string auth = authValues.Single();
             if (!auth.StartsWith(BasicPrefix))
             {
-                context.Result = new StatusCodeResult(403);
+                context.Result = new StatusCodeResult(401);
                 return;
             }
 
@@ -52,7 +52,7 @@ namespace Estranged.Lfs.Api.Filters
             string[] authPair = iso.GetString(decoded).Split(':');
             if (!authenticator.Authenticate(authPair[0], authPair[1]))
             {
-                context.Result = new StatusCodeResult(403);
+                context.Result = new StatusCodeResult(401);
                 return;
             }
 
