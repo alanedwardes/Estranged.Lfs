@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <OutputTypeEx>exe</OutputTypeEx>
-    <WarningsAsErrors>true</WarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   
   <ItemGroup>

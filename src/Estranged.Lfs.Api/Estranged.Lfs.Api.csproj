@@ -10,7 +10,7 @@
     <PackageTags>git lfs aspnet core</PackageTags>
     <AssemblyName>Estranged.Lfs.Api</AssemblyName>
     <RootNamespace>Estranged.Lfs.Api</RootNamespace>
-    <WarningsAsErrors>true</WarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
