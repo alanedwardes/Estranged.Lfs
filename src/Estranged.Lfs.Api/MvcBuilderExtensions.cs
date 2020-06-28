@@ -11,18 +11,22 @@ namespace Estranged.Lfs.Api
     {
         public static IMvcCoreBuilder AddGitLfs(this IMvcCoreBuilder builder)
         {
-            builder.AddJsonFormatters();
+            builder.AddNewtonsoftJson();
             builder.AddApplicationPart(typeof(LfsConstants).GetTypeInfo().Assembly);
             builder.AddMvcOptions(options =>
             {
                 options.Filters.Add(new ProducesAttribute(LfsConstants.LfsMediaType.MediaType.Buffer));
                 options.Filters.Add(new TypeFilterAttribute(typeof(BasicAuthFilter)));
 
-                JsonOutputFormatter jsonOutput = options.OutputFormatters.OfType<JsonOutputFormatter>().First();
-                jsonOutput.SupportedMediaTypes.Add(LfsConstants.LfsMediaType);
+                foreach (InputFormatter input in options.InputFormatters.OfType<NewtonsoftJsonInputFormatter>())
+                {
+                    input.SupportedMediaTypes.Add(LfsConstants.LfsMediaType);
+                }
 
-                JsonInputFormatter jsonInput = options.InputFormatters.OfType<JsonInputFormatter>().First();
-                jsonInput.SupportedMediaTypes.Add(LfsConstants.LfsMediaType);
+                foreach (OutputFormatter output in options.OutputFormatters.OfType<NewtonsoftJsonOutputFormatter>())
+                {
+                    output.SupportedMediaTypes.Add(LfsConstants.LfsMediaType);
+                }
             });
             return builder;
         }

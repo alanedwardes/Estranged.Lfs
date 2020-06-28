@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Version>2.1.0</Version>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Authors>alanedwardes</Authors>
     <Description>An S3 adapter for Estranged.Lfs.Api.</Description>
     <PackageId>Estranged.Lfs.Adapter.S3</PackageId>
@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.S3" Version="3.3.24.1" />
+    <PackageReference Include="AWSSDK.S3" Version="3.3.111.19" />
   </ItemGroup>
 
   <ItemGroup>

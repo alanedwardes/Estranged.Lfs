@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Estranged.Lfs.Api;
@@ -30,12 +29,14 @@ namespace Estranged.Lfs.Hosting.Lambda
             services.AddSingleton<IAmazonS3>(x => new AmazonS3Client());
             services.AddSingleton<IBlobAdapter, S3BlobAdapter>();
             services.AddLfs();
+
+            services.AddLogging(x => x.AddLambdaLogger());
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app)
         {
-            loggerFactory.AddLambdaLogger();
-            app.UseMvc();
+            app.UseRouting();
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
 }
