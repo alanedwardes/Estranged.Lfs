@@ -22,11 +22,12 @@ namespace Estranged.Lfs.Hosting.Lambda
             string lfsBucket = config["LFS_BUCKET"] ?? throw new InvalidOperationException("Missing environment variable LFS_BUCKET");
             string lfsUsername = config["LFS_USERNAME"] ?? throw new InvalidOperationException("Missing environment variable LFS_USERNAME");
             string lfsPassword = config["LFS_PASSWORD"] ?? throw new InvalidOperationException("Missing environment variable LFS_PASSWORD");
+            bool.TryParse(config["S3_ACCELERATION"] ?? "false", out bool s3Acceleration);
 
             services.AddSingleton<IS3BlobAdapterConfig>(x => new S3BlobAdapterConfig { Bucket = lfsBucket });
             services.AddSingleton<IAuthenticator>(x => new DictionaryAuthenticator(new Dictionary<string, string> { { lfsUsername, lfsPassword } }));
 
-            services.AddSingleton<IAmazonS3>(x => new AmazonS3Client());
+            services.AddSingleton<IAmazonS3>(x => new AmazonS3Client(new AmazonS3Config { UseAccelerateEndpoint = s3Acceleration }));
             services.AddSingleton<IBlobAdapter, S3BlobAdapter>();
             services.AddLfs();
 

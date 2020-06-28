@@ -18,15 +18,20 @@ namespace Estranged.Lfs.Adapter.S3
             this.config = config;
         }
 
-        public GetPreSignedUrlRequest MakePreSignedUrl(string oid, HttpVerb verb, string mimeType) => new GetPreSignedUrlRequest
+        public Uri MakePreSignedUrl(string oid, HttpVerb verb, string mimeType)
         {
-            Verb = verb,
-            BucketName = config.Bucket,
-            Key = config.KeyPrefix + oid,
-            Protocol = config.Protocol,
-            ContentType = mimeType,
-            Expires = DateTime.UtcNow + config.Expiry
-        };
+            var request = new GetPreSignedUrlRequest
+            {
+                Verb = verb,
+                BucketName = config.Bucket,
+                Key = config.KeyPrefix + oid,
+                Protocol = Protocol.HTTPS,
+                ContentType = mimeType,
+                Expires = DateTime.UtcNow + config.Expiry
+            };
+
+            return new Uri(client.GetPreSignedURL(request));
+        }
 
         public async Task<SignedBlob> UriForDownload(string oid)
         {
@@ -44,12 +49,9 @@ namespace Estranged.Lfs.Adapter.S3
                 };
             }
 
-            GetPreSignedUrlRequest request = MakePreSignedUrl(oid, HttpVerb.GET, null);
-            string signed = client.GetPreSignedURL(request);
-
             return new SignedBlob
             {
-                Uri = new Uri(signed),
+                Uri = MakePreSignedUrl(oid, HttpVerb.GET, null),
                 Size = metadataResponse.ContentLength,
                 Expiry = config.Expiry
             };
@@ -57,12 +59,9 @@ namespace Estranged.Lfs.Adapter.S3
 
         public Task<SignedBlob> UriForUpload(string oid, long size)
         {
-            GetPreSignedUrlRequest request = MakePreSignedUrl(oid, HttpVerb.PUT, BlobConstants.UploadMimeType);
-            string signed = client.GetPreSignedURL(request);
-
             return Task.FromResult(new SignedBlob
             {
-                Uri = new Uri(signed),
+                Uri = MakePreSignedUrl(oid, HttpVerb.PUT, BlobConstants.UploadMimeType),
                 Expiry = config.Expiry,
                 Headers = new Dictionary<string, string>
                 {
