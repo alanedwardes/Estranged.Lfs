@@ -36,12 +36,12 @@ namespace Estranged.Lfs.Authenticator.GitHub
 
             if (repository.Permissions.Pull)
             {
-                actualPermission &= LfsPermission.Read;
+                actualPermission |= LfsPermission.Read;
             }
 
             if (repository.Permissions.Push)
             {
-                actualPermission &= LfsPermission.Write;
+                actualPermission |= LfsPermission.Write;
             }
 
             if (!actualPermission.HasFlag(requiredPermission))
