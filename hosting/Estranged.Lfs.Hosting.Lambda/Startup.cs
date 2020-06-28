@@ -28,7 +28,7 @@ namespace Estranged.Lfs.Hosting.Lambda
                 .AddEnvironmentVariables()
                 .Build();
 
-            string lfsBucket = config[LfsBucketVariable] ?? throw new InvalidOperationException("Missing environment variable LFS_BUCKET");
+            string lfsBucket = config[LfsBucketVariable] ?? throw new InvalidOperationException($"Missing environment variable {LfsBucketVariable}");
             string lfsUsername = config[LfsUsernameVariable];
             string lfsPassword = config[LfsPasswordVariable];
             string gitHubOrganisation = config[GitHubOrganisationVariable];
@@ -55,9 +55,7 @@ namespace Estranged.Lfs.Hosting.Lambda
                 services.AddLfsGitHubAuthenticator(new GitHubAuthenticatorConfig { Organisation = gitHubOrganisation, Repository = gitHubRepository });
             }
 
-            services.AddSingleton<IAmazonS3>(x => new AmazonS3Client(new AmazonS3Config { UseAccelerateEndpoint = s3Acceleration }));
-
-            services.AddLfsS3Adapter(new S3BlobAdapterConfig { Bucket = lfsBucket });
+            services.AddLfsS3Adapter(new S3BlobAdapterConfig { Bucket = lfsBucket }, new AmazonS3Client(new AmazonS3Config { UseAccelerateEndpoint = s3Acceleration }));
             services.AddLfsApi();
 
             services.AddLogging(x => x.AddLambdaLogger());

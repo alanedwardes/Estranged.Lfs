@@ -46,7 +46,7 @@ namespace Estranged.Lfs.Adapter.S3
                 return new SignedBlob
                 {
                     ErrorCode = (int)ex.StatusCode,
-                    ErrorMessage = "Problem getting object"
+                    ErrorMessage = ex.Message
                 };
             }
 

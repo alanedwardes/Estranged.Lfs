@@ -23,10 +23,7 @@ namespace Estranged.Lfs.Hosting.AspNet
             });
 
             services.AddSingleton<IAmazonS3, AmazonS3Client>();
-            services.AddLfsS3Adapter(new S3BlobAdapterConfig
-            {
-                Bucket = "estranged-lfs-test"
-            });
+            services.AddLfsS3Adapter(new S3BlobAdapterConfig{Bucket = "estranged-lfs-test"}, new AmazonS3Client());
             services.AddSingleton<IAuthenticator>(x => new DictionaryAuthenticator(new Dictionary<string, string> { { "usernametest", "passwordtest" } }));
             services.AddLfsApi();
         }

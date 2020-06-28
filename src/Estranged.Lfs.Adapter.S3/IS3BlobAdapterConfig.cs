@@ -1,5 +1,4 @@
-﻿using Amazon.S3;
-using System;
+﻿using System;
 
 namespace Estranged.Lfs.Adapter.S3
 {
