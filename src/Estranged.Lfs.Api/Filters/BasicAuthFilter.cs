@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Threading;
 
 namespace Estranged.Lfs.Api.Filters
 {
@@ -24,32 +25,28 @@ namespace Estranged.Lfs.Api.Filters
         public string AuthorizationHeader => "Authorization";
         public string BasicPrefix => "Basic";
 
-        private void Deny(ActionExecutingContext context)
+        private void Unauthorised(ActionExecutingContext context)
         {
             context.Result = new StatusCodeResult(401);
         }
 
-        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        private (string Username, string Password) GetCredentials(IHeaderDictionary headers)
         {
-            IHeaderDictionary headers = context.HttpContext.Request.Headers;
             if (!headers.ContainsKey(AuthorizationHeader))
             {
-                Deny(context);
-                return;
+                throw new InvalidOperationException("No Authorization header found.");
             }
 
             string[] authValues = headers[AuthorizationHeader].ToArray();
             if (authValues.Length != 1)
             {
-                Deny(context);
-                return;
+                throw new InvalidOperationException("More than one Authorization header found.");
             }
 
             string auth = authValues.Single();
             if (!auth.StartsWith(BasicPrefix))
             {
-                Deny(context);
-                return;
+                throw new InvalidOperationException("Authorization header is not Basic.");
             }
 
             auth = auth.Substring(BasicPrefix.Length).Trim();
@@ -59,15 +56,34 @@ namespace Estranged.Lfs.Api.Filters
 
             string[] authPair = iso.GetString(decoded).Split(':');
 
-            LfsPermission requiredPermission = context.HttpContext.Request.Method.ToUpper() == "GET" ? LfsPermission.Read : LfsPermission.Write;
+            return (authPair[0], authPair[1]);
+        }
+
+        private LfsPermission GetRequiredPermission(HttpRequest request) => request.Method.ToUpper() == "GET" ? LfsPermission.Read : LfsPermission.Write;
+
+        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        {
+            string username;
+            string password;
             try
             {
-                await authenticator.Authenticate(authPair[0], authPair[1], requiredPermission).ConfigureAwait(false);
+                (username, password) = GetCredentials(context.HttpContext.Request.Headers);
             }
             catch (Exception e)
             {
-                logger.LogError(e, "ERror when authenticating");
-                Deny(context);
+                logger.LogError(e, $"Error getting Basic credentials");
+                Unauthorised(context);
+                return;
+            }
+
+            try
+            {
+                await authenticator.Authenticate(username, password, GetRequiredPermission(context.HttpContext.Request), CancellationToken.None).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, $"Error from {authenticator.GetType().Name}");
+                Unauthorised(context);
                 return;
             }
 

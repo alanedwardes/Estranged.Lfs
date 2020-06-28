@@ -1,6 +1,7 @@
 ﻿using Estranged.Lfs.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Estranged.Lfs.Data
@@ -14,9 +15,9 @@ namespace Estranged.Lfs.Data
             this.blobAdapter = blobAdapter;
         }
 
-        public async Task<IEnumerable<ResponseObject>> UploadObjects(IList<RequestObject> objects)
+        public async Task<IEnumerable<ResponseObject>> UploadObjects(IList<RequestObject> objects, CancellationToken token)
         {
-            IEnumerable<Task<SignedBlob>> uploadUriTasks = objects.Select(ob => blobAdapter.UriForUpload(ob.Oid, ob.Size));
+            IEnumerable<Task<SignedBlob>> uploadUriTasks = objects.Select(ob => blobAdapter.UriForUpload(ob.Oid, ob.Size, token));
 
             SignedBlob[] signedBlobs = await Task.WhenAll(uploadUriTasks).ConfigureAwait(false);
 
@@ -37,10 +38,10 @@ namespace Estranged.Lfs.Data
             });
         }
 
-        public async Task<IEnumerable<ResponseObject>> DownloadObjects(IList<RequestObject> objects)
+        public async Task<IEnumerable<ResponseObject>> DownloadObjects(IList<RequestObject> objects, CancellationToken token)
         {
             var responseObjects = new List<ResponseObject>();
-            foreach ((RequestObject requestObject, Task<SignedBlob> signedBlobTask) in objects.Select(x => (x, blobAdapter.UriForDownload(x.Oid))))
+            foreach ((RequestObject requestObject, Task<SignedBlob> signedBlobTask) in objects.Select(x => (x, blobAdapter.UriForDownload(x.Oid, token))))
             {
                 var signedBlob = await signedBlobTask.ConfigureAwait(false);
 

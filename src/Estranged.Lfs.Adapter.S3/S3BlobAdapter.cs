@@ -3,11 +3,12 @@ using Amazon.S3.Model;
 using Estranged.Lfs.Data;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Estranged.Lfs.Adapter.S3
 {
-    public class S3BlobAdapter : IBlobAdapter
+    internal sealed class S3BlobAdapter : IBlobAdapter
     {
         private readonly IAmazonS3 client;
         private readonly IS3BlobAdapterConfig config;
@@ -33,12 +34,12 @@ namespace Estranged.Lfs.Adapter.S3
             return new Uri(client.GetPreSignedURL(request));
         }
 
-        public async Task<SignedBlob> UriForDownload(string oid)
+        public async Task<SignedBlob> UriForDownload(string oid, CancellationToken token)
         {
             GetObjectMetadataResponse metadataResponse;
             try
             {
-                metadataResponse = await client.GetObjectMetadataAsync(config.Bucket, config.KeyPrefix + oid).ConfigureAwait(false);
+                metadataResponse = await client.GetObjectMetadataAsync(config.Bucket, config.KeyPrefix + oid, token).ConfigureAwait(false);
             }
             catch (AmazonS3Exception ex)
             {
@@ -57,7 +58,7 @@ namespace Estranged.Lfs.Adapter.S3
             };
         }
 
-        public Task<SignedBlob> UriForUpload(string oid, long size)
+        public Task<SignedBlob> UriForUpload(string oid, long size, CancellationToken token)
         {
             return Task.FromResult(new SignedBlob
             {

@@ -5,11 +5,11 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <Authors>alanedwardes</Authors>
     <Description>An S3 adapter for Estranged.Lfs.Api.</Description>
-    <PackageId>Estranged.Lfs.Adapter.S3</PackageId>
+    <PackageId>Estranged.Lfs.Authenticator.GitHub</PackageId>
     <PackageProjectUrl>https://github.com/alanedwardes/Estranged.Lfs</PackageProjectUrl>
     <PackageTags>git lfs s3</PackageTags>
-    <AssemblyName>Estranged.Lfs.Adapter.S3</AssemblyName>
-    <RootNamespace>Estranged.Lfs.Adapter.S3</RootNamespace>
+    <AssemblyName>Estranged.Lfs.Authenticator.GitHub</AssemblyName>
+    <RootNamespace>Estranged.Lfs.Authenticator.GitHub</RootNamespace>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 

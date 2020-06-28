@@ -3,6 +3,7 @@ using Estranged.Lfs.Data;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Estranged.Lfs.Api.Controllers
@@ -17,6 +18,8 @@ namespace Estranged.Lfs.Api.Controllers
             this.objectManager = objectManager;
         }
 
+        private CancellationToken GenerateTimeoutToken() => new CancellationTokenSource(TimeSpan.FromSeconds(25)).Token;
+
         [HttpPost("batch")]
         public async Task<BatchResponse> BatchAsync([FromBody] BatchRequest request)
         {
@@ -24,8 +27,8 @@ namespace Estranged.Lfs.Api.Controllers
             {
                 return new BatchResponse
                 {
-                    Transfer = request.Transfers.First(), // TODO: this is not correct
-                    Objects = await objectManager.UploadObjects(request.Objects)
+                    Transfer = request.Transfers.First(),
+                    Objects = await objectManager.UploadObjects(request.Objects, GenerateTimeoutToken())
                                                  .ConfigureAwait(false)
                 };
             }
@@ -34,8 +37,8 @@ namespace Estranged.Lfs.Api.Controllers
             {
                 return new BatchResponse
                 {
-                    Transfer = request.Transfers.First(), // TODO: this is not correct
-                    Objects = await objectManager.DownloadObjects(request.Objects)
+                    Transfer = request.Transfers.First(),
+                    Objects = await objectManager.DownloadObjects(request.Objects, GenerateTimeoutToken())
                                                  .ConfigureAwait(false)
                 };
             }

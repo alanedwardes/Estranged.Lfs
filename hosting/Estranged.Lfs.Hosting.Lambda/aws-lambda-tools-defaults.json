@@ -8,7 +8,7 @@
   "function-name": "EstrangedLambdaLfs",
   "function-handler": "Estranged.Lfs.Hosting.Lambda::Estranged.Lfs.Hosting.Lambda.LambdaEntryPoint::FunctionHandlerAsync",
   "function-memory-size": 256,
-  "function-timeout": 10,
+  "function-timeout": 30,
   "function-runtime": "dotnetcore3.1",
   "environment-variables": ""
 }

@@ -1,11 +1,12 @@
 ﻿using Estranged.Lfs.Data;
 using Octokit;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Estranged.Lfs.Authenticator.GitHub
 {
-    public class GitHubAuthenticator : IAuthenticator
+    internal sealed class GitHubAuthenticator : IAuthenticator
     {
         private readonly IGitHubAuthenticatorConfig config;
 
@@ -26,7 +27,7 @@ namespace Estranged.Lfs.Authenticator.GitHub
             return client.Repository;
         }
 
-        public async Task Authenticate(string username, string password, LfsPermission requiredPermission)
+        public async Task Authenticate(string username, string password, LfsPermission requiredPermission, CancellationToken token)
         {
             var client = CreateClient(username, password);
 

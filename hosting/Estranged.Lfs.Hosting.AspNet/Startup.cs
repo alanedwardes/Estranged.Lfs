@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Estranged.Lfs.Api;
 using Amazon.S3;
-using Amazon.Runtime;
 using Microsoft.Extensions.Configuration;
 using Estranged.Lfs.Adapter.S3;
 using Estranged.Lfs.Data;
@@ -17,11 +16,6 @@ namespace Estranged.Lfs.Hosting.AspNet
         {
             IConfiguration credentials = new ConfigurationBuilder().AddJsonFile("credentials.json").Build();
 
-            services.AddSingleton<IS3BlobAdapterConfig>(x => new S3BlobAdapterConfig
-            {
-                Bucket = "estranged-lfs-test"
-            });
-
             services.AddLogging(x =>
             {
                 x.AddConsole();
@@ -29,9 +23,12 @@ namespace Estranged.Lfs.Hosting.AspNet
             });
 
             services.AddSingleton<IAmazonS3, AmazonS3Client>();
-            services.AddSingleton<IBlobAdapter, S3BlobAdapter>();
+            services.AddLfsS3Adapter(new S3BlobAdapterConfig
+            {
+                Bucket = "estranged-lfs-test"
+            });
             services.AddSingleton<IAuthenticator>(x => new DictionaryAuthenticator(new Dictionary<string, string> { { "usernametest", "passwordtest" } }));
-            services.AddLfs();
+            services.AddLfsApi();
         }
 
         public void Configure(IApplicationBuilder app)
