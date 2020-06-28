@@ -68,6 +68,7 @@ namespace Estranged.Lfs.Api.Filters
             {
                 logger.LogError(e, "ERror when authenticating");
                 Deny(context);
+                return;
             }
 
             await next();
