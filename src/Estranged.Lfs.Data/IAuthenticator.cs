@@ -1,7 +1,9 @@
-﻿namespace Estranged.Lfs.Data
+﻿using System.Threading.Tasks;
+
+namespace Estranged.Lfs.Data
 {
     public interface IAuthenticator
     {
-        bool Authenticate(string username, string password);
+        Task Authenticate(string username, string password, LfsPermission requiredPermission);
     }
 }

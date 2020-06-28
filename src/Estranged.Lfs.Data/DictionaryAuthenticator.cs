@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Estranged.Lfs.Data
 {
@@ -11,9 +13,14 @@ namespace Estranged.Lfs.Data
             this.credentials = credentials;
         }
 
-        public bool Authenticate(string username, string password)
+        public Task Authenticate(string username, string password, LfsPermission requiredPermission)
         {
-            return credentials.ContainsKey(username) && credentials[username] == password;
+            if (!credentials.ContainsKey(username) || credentials[username] != password)
+            {
+                throw new InvalidOperationException($"Invalid username/password combination");
+            }
+
+            return Task.CompletedTask;
         }
     }
 }
