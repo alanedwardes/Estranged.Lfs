@@ -19,12 +19,12 @@ namespace Estranged.Lfs.Hosting.Lambda
                 .AddEnvironmentVariables()
                 .Build();
 
-            string LfsBucket = config["LFS_BUCKET"] ?? throw new InvalidOperationException("Missing environment variable LFS_BUCKET");
-            string LfsUsername = config["LFS_USERNAME"] ?? throw new InvalidOperationException("Missing environment variable LFS_USERNAME");
-            string LfsPassword = config["LFS_PASSWORD"] ?? throw new InvalidOperationException("Missing environment variable LFS_PASSWORD");
+            string lfsBucket = config["LFS_BUCKET"] ?? throw new InvalidOperationException("Missing environment variable LFS_BUCKET");
+            string lfsUsername = config["LFS_USERNAME"] ?? throw new InvalidOperationException("Missing environment variable LFS_USERNAME");
+            string lfsPassword = config["LFS_PASSWORD"] ?? throw new InvalidOperationException("Missing environment variable LFS_PASSWORD");
 
-            services.AddSingleton<IS3BlobAdapterConfig>(x => new S3BlobAdapterConfig { Bucket = LfsBucket });
-            services.AddSingleton<IAuthenticator>(x => new DictionaryAuthenticator(new Dictionary<string, string> { { LfsUsername, LfsPassword } }));
+            services.AddSingleton<IS3BlobAdapterConfig>(x => new S3BlobAdapterConfig { Bucket = lfsBucket });
+            services.AddSingleton<IAuthenticator>(x => new DictionaryAuthenticator(new Dictionary<string, string> { { lfsUsername, lfsPassword } }));
 
             services.AddSingleton<IAmazonS3>(x => new AmazonS3Client());
             services.AddSingleton<IBlobAdapter, S3BlobAdapter>();

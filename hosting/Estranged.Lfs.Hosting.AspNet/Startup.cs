@@ -28,7 +28,7 @@ namespace Estranged.Lfs.Hosting.AspNet
                 x.AddDebug();
             });
 
-            services.AddSingleton<IAmazonS3>(x => new AmazonS3Client(new BasicAWSCredentials(credentials["s3:key"], credentials["s3:secret"]), Amazon.RegionEndpoint.EUWest2));
+            services.AddSingleton<IAmazonS3, AmazonS3Client>();
             services.AddSingleton<IBlobAdapter, S3BlobAdapter>();
             services.AddSingleton<IAuthenticator>(x => new DictionaryAuthenticator(new Dictionary<string, string> { { "usernametest", "passwordtest" } }));
             services.AddLfs();
