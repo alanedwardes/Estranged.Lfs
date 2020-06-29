@@ -4,18 +4,14 @@
     <Version>3.0.0</Version>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Authors>alanedwardes</Authors>
-    <Description>A GitHub authentication adapter for Estranged.Lfs.Api.</Description>
-    <PackageId>Estranged.Lfs.Authenticator.GitHub</PackageId>
+    <Description>A BitBucket authentication adapter for Estranged.Lfs.Api.</Description>
+    <PackageId>Estranged.Lfs.Authenticator.BitBucket</PackageId>
     <PackageProjectUrl>https://github.com/alanedwardes/Estranged.Lfs</PackageProjectUrl>
     <PackageTags>git lfs s3</PackageTags>
-    <AssemblyName>Estranged.Lfs.Authenticator.GitHub</AssemblyName>
-    <RootNamespace>Estranged.Lfs.Authenticator.GitHub</RootNamespace>
+    <AssemblyName>Estranged.Lfs.Authenticator.BitBucket</AssemblyName>
+    <RootNamespace>Estranged.Lfs.Authenticator.BitBucket</RootNamespace>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Octokit" Version="0.48.0" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Estranged.Lfs.Data\Estranged.Lfs.Data.csproj" />
