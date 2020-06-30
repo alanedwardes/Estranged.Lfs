@@ -10,7 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7C2BE024-CCB9-4F3E-9032-E5A472857C27}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		appveyor.yml = appveyor.yml
+		.github\workflows\dotnet-core.yml = .github\workflows\dotnet-core.yml
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -31,6 +31,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{299762B3-8879-42F1-B002-4A9AF7401A13}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authenticators", "Authenticators", "{FD975DFA-BEA7-451F-B85F-262B6C658DAC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{68EBAB1E-0B07-4701-A39D-096A8226A3A2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estranged.Lfs.Tests", "tests\Estranged.Lfs.Tests\Estranged.Lfs.Tests.csproj", "{3EBBF34F-B0EF-4C60-A9F8-432A5E9C1DD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,6 +70,10 @@ Global
 		{711786E0-5F18-440C-A2FA-CB1E26FD2DEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{711786E0-5F18-440C-A2FA-CB1E26FD2DEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{711786E0-5F18-440C-A2FA-CB1E26FD2DEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EBBF34F-B0EF-4C60-A9F8-432A5E9C1DD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EBBF34F-B0EF-4C60-A9F8-432A5E9C1DD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EBBF34F-B0EF-4C60-A9F8-432A5E9C1DD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EBBF34F-B0EF-4C60-A9F8-432A5E9C1DD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +88,7 @@ Global
 		{711786E0-5F18-440C-A2FA-CB1E26FD2DEF} = {FD975DFA-BEA7-451F-B85F-262B6C658DAC}
 		{299762B3-8879-42F1-B002-4A9AF7401A13} = {03ED5016-F8BF-4C18-A997-2FFE0E6EF896}
 		{FD975DFA-BEA7-451F-B85F-262B6C658DAC} = {03ED5016-F8BF-4C18-A997-2FFE0E6EF896}
+		{3EBBF34F-B0EF-4C60-A9F8-432A5E9C1DD2} = {68EBAB1E-0B07-4701-A39D-096A8226A3A2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {33343382-4FC4-4B1D-A339-1D682FC0D799}

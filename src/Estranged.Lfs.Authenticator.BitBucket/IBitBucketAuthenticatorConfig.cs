@@ -2,6 +2,7 @@
 {
     public interface IBitBucketAuthenticatorConfig
     {
-        string RepositoryFullName { get; }
+        string Workspace { get; }
+        string Repository { get; }
     }
 }

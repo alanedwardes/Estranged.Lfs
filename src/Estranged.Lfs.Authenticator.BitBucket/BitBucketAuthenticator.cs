@@ -20,6 +20,7 @@ namespace Estranged.Lfs.Authenticator.BitBucket
         private IBitBucketClient CreateClient(string username, string password)
         {
             var client = new HttpClient();
+            client.BaseAddress = new Uri("https://api.bitbucket.org/");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}")));
 
             return new BitBucketClient(client);
@@ -29,24 +30,8 @@ namespace Estranged.Lfs.Authenticator.BitBucket
         {
             var client = CreateClient(username, password);
 
-            var repositoryPermissions = await client.GetRepositoryPermissions(config.RepositoryFullName, token);
-
-            //LfsPermission actualPermission = LfsPermission.None;
-
-            //if (repository.Permissions.Pull)
-            //{
-            //    actualPermission |= LfsPermission.Read;
-            //}
-
-            //if (repository.Permissions.Push)
-            //{
-            //    actualPermission |= LfsPermission.Write;
-            //}
-
-            //if (!actualPermission.HasFlag(requiredPermission))
-            //{
-            //    throw new InvalidOperationException($"User {username} doesn't have permission {requiredPermission} for repository {config.Organisation}/{config.Repository} (actual: {actualPermission})");
-            //}
+            // Check that the user can access the repository
+            await client.GetRepository(config.Workspace, config.Repository, token);
         }
     }
 }

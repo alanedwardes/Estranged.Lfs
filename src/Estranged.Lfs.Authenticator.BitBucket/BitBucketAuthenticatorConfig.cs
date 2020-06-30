@@ -2,6 +2,7 @@
 {
     public sealed class BitBucketAuthenticatorConfig : IBitBucketAuthenticatorConfig
     {
-        public string RepositoryFullName { get; set; }
+        public string Workspace { get; set; }
+        public string Repository { get; set; }
     }
 }

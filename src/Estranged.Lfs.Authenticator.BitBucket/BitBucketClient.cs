@@ -1,6 +1,6 @@
 ﻿using Estranged.Lfs.Authenticator.BitBucket.Entities;
+using Newtonsoft.Json;
 using System.Net.Http;
-using System.Runtime.Serialization.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -16,14 +16,18 @@ namespace Estranged.Lfs.Authenticator.BitBucket
             this.httpClient = httpClient;
         }
 
-        public async Task<RepositoryPermissions> GetRepositoryPermissions(string repositoryFullName, CancellationToken token)
+        public async Task<RepositoryPermissions> GetRepositoryPermissions(string workspace, string repository, CancellationToken token)
         {
-            var response = await httpClient.GetAsync($"/api.bitbucket.org/2.0/user/permissions/repositories?q=repository.full_name=\"{HttpUtility.UrlEncode(repositoryFullName)}\"", token);
+            var response = await httpClient.GetAsync($"/2.0/user/permissions/repositories?q=repository.full_name=\"{HttpUtility.UrlEncode(workspace)}/{HttpUtility.UrlEncode(repository)}\"", token);
             response.EnsureSuccessStatusCode();
+            return JsonConvert.DeserializeObject<RepositoryPermissions>(await response.Content.ReadAsStringAsync());
+        }
 
-            var seraliser = new DataContractJsonSerializer(typeof(RepositoryPermissions));
-
-            return (RepositoryPermissions)seraliser.ReadObject(await response.Content.ReadAsStreamAsync());
+        public async Task<Repository> GetRepository(string workspace, string repository, CancellationToken token)
+        {
+            var response = await httpClient.GetAsync($"/2.0/repositories/{HttpUtility.UrlEncode(workspace)}/{HttpUtility.UrlEncode(repository)}", token);
+            response.EnsureSuccessStatusCode();
+            return JsonConvert.DeserializeObject<Repository>(await response.Content.ReadAsStringAsync());
         }
     }
 }

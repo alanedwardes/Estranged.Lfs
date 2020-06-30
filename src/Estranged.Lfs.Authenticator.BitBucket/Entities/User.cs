@@ -6,7 +6,7 @@ namespace Estranged.Lfs.Authenticator.BitBucket.Entities
     public sealed class User
     {
         [DataMember(Name = "display_name")]
-        public string Display_name { get; set; }
+        public string DisplayName { get; set; }
 
         [DataMember(Name = "uuid")]
         public string Uuid { get; set; }
@@ -21,6 +21,6 @@ namespace Estranged.Lfs.Authenticator.BitBucket.Entities
         public string Type { get; set; }
 
         [DataMember(Name = "account_id")]
-        public string Account_id { get; set; }
+        public string AccountId { get; set; }
     }
 }

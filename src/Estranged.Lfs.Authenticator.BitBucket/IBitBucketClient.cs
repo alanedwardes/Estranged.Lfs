@@ -6,6 +6,7 @@ namespace Estranged.Lfs.Authenticator.BitBucket
 {
     internal interface IBitBucketClient
     {
-        Task<RepositoryPermissions> GetRepositoryPermissions(string repositoryFullName, CancellationToken token);
+        Task<Repository> GetRepository(string workspace, string repository, CancellationToken token);
+        Task<RepositoryPermissions> GetRepositoryPermissions(string workspace, string repository, CancellationToken token);
     }
 }

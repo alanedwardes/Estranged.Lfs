@@ -12,9 +12,9 @@ namespace Estranged.Lfs.Authenticator.BitBucket.Entities
         public User User { get; set; }
 
         [DataMember(Name = "repository")]
-        public Repository Repository { get; set; }
+        public RepositorySummary Repository { get; set; }
 
         [DataMember(Name = "permission")]
-        public string Permission { get; set; }
+        public RepositoryPermissionType Permission { get; set; }
     }
 }
