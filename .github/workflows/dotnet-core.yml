@@ -25,4 +25,7 @@ jobs:
       env:
         BITBUCKET_CREDENTIALS: ${{ secrets.BITBUCKET_CREDENTIALS }}
         GH_CREDENTIALS: ${{ secrets.GH_CREDENTIALS }}
+        AWS_REGION: eu-west-1
+        AWS_ACCESS_KEY_ID:  AKIA2AKUNTCWGX2IMZEO
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: dotnet test --no-restore --verbosity normal
