@@ -20,7 +20,7 @@ namespace Estranged.Lfs.Tests.Adapter.S3
         }
 
         [Fact]
-        public async Task TestGetBlobFound()
+        public async Task TestDownloadBlobFound()
         {
             var adapter = CreateAdapter();
 
@@ -31,7 +31,7 @@ namespace Estranged.Lfs.Tests.Adapter.S3
         }
 
         [Fact]
-        public async Task TestGetBlobNotFound()
+        public async Task TestDownloadBlobNotFound()
         {
             var adapter = CreateAdapter();
 
