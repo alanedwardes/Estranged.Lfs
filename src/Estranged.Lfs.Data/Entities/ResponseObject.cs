@@ -13,5 +13,7 @@ namespace Estranged.Lfs.Data.Entities
         public bool? Authenticated { get; set; }
         [DataMember(Name = "actions")]
         public Actions Actions { get; set; } = new Actions();
+        [DataMember(Name = "error")]
+        public ResponseObjectError Error { get; set; }
     }
 }

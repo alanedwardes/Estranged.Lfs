@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 
 namespace Estranged.Lfs.Data
 {
@@ -6,8 +7,12 @@ namespace Estranged.Lfs.Data
     {
         public static IServiceCollection AddLfsData(this IServiceCollection services)
         {
-            services.AddTransient<IObjectManager, ObjectManager>();
-            return services;
+            return services.AddSingleton<IObjectManager, ObjectManager>();
+        }
+
+        public static IServiceCollection AddLfsDictionaryAuthenticator(this IServiceCollection services, IReadOnlyDictionary<string, string> credentials)
+        {
+            return services.AddSingleton<IAuthenticator>(new DictionaryAuthenticator(credentials));
         }
     }
 }

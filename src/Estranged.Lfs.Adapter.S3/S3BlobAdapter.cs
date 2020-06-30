@@ -3,11 +3,12 @@ using Amazon.S3.Model;
 using Estranged.Lfs.Data;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Estranged.Lfs.Adapter.S3
 {
-    public class S3BlobAdapter : IBlobAdapter
+    internal sealed class S3BlobAdapter : IBlobAdapter
     {
         private readonly IAmazonS3 client;
         private readonly IS3BlobAdapterConfig config;
@@ -18,36 +19,50 @@ namespace Estranged.Lfs.Adapter.S3
             this.config = config;
         }
 
-        public GetPreSignedUrlRequest MakePreSignedUrl(string oid, HttpVerb verb, string mimeType) => new GetPreSignedUrlRequest
+        public Uri MakePreSignedUrl(string oid, HttpVerb verb, string mimeType)
         {
-            Verb = verb,
-            BucketName = config.Bucket,
-            Key = config.KeyPrefix + oid,
-            Protocol = config.Protocol,
-            ContentType = mimeType,
-            Expires = DateTime.UtcNow + config.Expiry
-        };
-
-        public Task<SignedBlob> UriForDownload(string oid)
-        {
-            GetPreSignedUrlRequest request = MakePreSignedUrl(oid, HttpVerb.GET, null);
-            string signed = client.GetPreSignedURL(request);
-
-            return Task.FromResult(new SignedBlob
+            var request = new GetPreSignedUrlRequest
             {
-                Uri = new Uri(signed),
-                Expiry = config.Expiry
-            });
+                Verb = verb,
+                BucketName = config.Bucket,
+                Key = config.KeyPrefix + oid,
+                Protocol = Protocol.HTTPS,
+                ContentType = mimeType,
+                Expires = DateTime.UtcNow + config.Expiry
+            };
+
+            return new Uri(client.GetPreSignedURL(request));
         }
 
-        public Task<SignedBlob> UriForUpload(string oid, long size)
+        public async Task<SignedBlob> UriForDownload(string oid, CancellationToken token)
         {
-            GetPreSignedUrlRequest request = MakePreSignedUrl(oid, HttpVerb.PUT, BlobConstants.UploadMimeType);
-            string signed = client.GetPreSignedURL(request);
+            GetObjectMetadataResponse metadataResponse;
+            try
+            {
+                metadataResponse = await client.GetObjectMetadataAsync(config.Bucket, config.KeyPrefix + oid, token).ConfigureAwait(false);
+            }
+            catch (AmazonS3Exception ex)
+            {
+                return new SignedBlob
+                {
+                    ErrorCode = (int)ex.StatusCode,
+                    ErrorMessage = ex.Message
+                };
+            }
 
+            return new SignedBlob
+            {
+                Uri = MakePreSignedUrl(oid, HttpVerb.GET, null),
+                Size = metadataResponse.ContentLength,
+                Expiry = config.Expiry
+            };
+        }
+
+        public Task<SignedBlob> UriForUpload(string oid, long size, CancellationToken token)
+        {
             return Task.FromResult(new SignedBlob
             {
-                Uri = new Uri(signed),
+                Uri = MakePreSignedUrl(oid, HttpVerb.PUT, BlobConstants.UploadMimeType),
                 Expiry = config.Expiry,
                 Headers = new Dictionary<string, string>
                 {

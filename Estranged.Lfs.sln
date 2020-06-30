@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{03ED5016-F8BF-4C18-A997-2FFE0E6EF896}"
 EndProject
@@ -10,7 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7C2BE024-CCB9-4F3E-9032-E5A472857C27}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		appveyor.yml = appveyor.yml
+		.github\workflows\dotnet-core.yml = .github\workflows\dotnet-core.yml
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -23,6 +23,18 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estranged.Lfs.Adapter.S3", "src\Estranged.Lfs.Adapter.S3\Estranged.Lfs.Adapter.S3.csproj", "{C38DD1A3-E930-4BF2-8BB2-ADFD66225B25}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estranged.Lfs.Hosting.Lambda", "hosting\Estranged.Lfs.Hosting.Lambda\Estranged.Lfs.Hosting.Lambda.csproj", "{D4D0ABA0-A829-43C0-B3E8-C57AE9170ECF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estranged.Lfs.Authenticator.GitHub", "src\Estranged.Lfs.Authenticator.GitHub\Estranged.Lfs.Authenticator.GitHub.csproj", "{6467DCDA-D062-4DD4-A4A2-D8D551411B2A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estranged.Lfs.Authenticator.BitBucket", "src\Estranged.Lfs.Authenticator.BitBucket\Estranged.Lfs.Authenticator.BitBucket.csproj", "{711786E0-5F18-440C-A2FA-CB1E26FD2DEF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{299762B3-8879-42F1-B002-4A9AF7401A13}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authenticators", "Authenticators", "{FD975DFA-BEA7-451F-B85F-262B6C658DAC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{68EBAB1E-0B07-4701-A39D-096A8226A3A2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estranged.Lfs.Tests", "tests\Estranged.Lfs.Tests\Estranged.Lfs.Tests.csproj", "{3EBBF34F-B0EF-4C60-A9F8-432A5E9C1DD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +62,18 @@ Global
 		{D4D0ABA0-A829-43C0-B3E8-C57AE9170ECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4D0ABA0-A829-43C0-B3E8-C57AE9170ECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4D0ABA0-A829-43C0-B3E8-C57AE9170ECF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6467DCDA-D062-4DD4-A4A2-D8D551411B2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6467DCDA-D062-4DD4-A4A2-D8D551411B2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6467DCDA-D062-4DD4-A4A2-D8D551411B2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6467DCDA-D062-4DD4-A4A2-D8D551411B2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{711786E0-5F18-440C-A2FA-CB1E26FD2DEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{711786E0-5F18-440C-A2FA-CB1E26FD2DEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{711786E0-5F18-440C-A2FA-CB1E26FD2DEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{711786E0-5F18-440C-A2FA-CB1E26FD2DEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EBBF34F-B0EF-4C60-A9F8-432A5E9C1DD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EBBF34F-B0EF-4C60-A9F8-432A5E9C1DD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EBBF34F-B0EF-4C60-A9F8-432A5E9C1DD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EBBF34F-B0EF-4C60-A9F8-432A5E9C1DD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,7 +82,15 @@ Global
 		{948329E9-DE90-4245-8C2E-BCD23746056A} = {89E5DA04-5E1C-410C-9175-27C0713594AD}
 		{EAFEAA0F-678A-4888-9F32-45DA467A4CD5} = {03ED5016-F8BF-4C18-A997-2FFE0E6EF896}
 		{CE95E105-4980-4F65-915C-879692BC0F23} = {03ED5016-F8BF-4C18-A997-2FFE0E6EF896}
-		{C38DD1A3-E930-4BF2-8BB2-ADFD66225B25} = {03ED5016-F8BF-4C18-A997-2FFE0E6EF896}
+		{C38DD1A3-E930-4BF2-8BB2-ADFD66225B25} = {299762B3-8879-42F1-B002-4A9AF7401A13}
 		{D4D0ABA0-A829-43C0-B3E8-C57AE9170ECF} = {89E5DA04-5E1C-410C-9175-27C0713594AD}
+		{6467DCDA-D062-4DD4-A4A2-D8D551411B2A} = {FD975DFA-BEA7-451F-B85F-262B6C658DAC}
+		{711786E0-5F18-440C-A2FA-CB1E26FD2DEF} = {FD975DFA-BEA7-451F-B85F-262B6C658DAC}
+		{299762B3-8879-42F1-B002-4A9AF7401A13} = {03ED5016-F8BF-4C18-A997-2FFE0E6EF896}
+		{FD975DFA-BEA7-451F-B85F-262B6C658DAC} = {03ED5016-F8BF-4C18-A997-2FFE0E6EF896}
+		{3EBBF34F-B0EF-4C60-A9F8-432A5E9C1DD2} = {68EBAB1E-0B07-4701-A39D-096A8226A3A2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {33343382-4FC4-4B1D-A339-1D682FC0D799}
 	EndGlobalSection
 EndGlobal

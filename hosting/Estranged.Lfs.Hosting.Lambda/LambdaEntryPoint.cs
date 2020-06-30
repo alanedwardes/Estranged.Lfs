@@ -10,7 +10,7 @@ namespace Estranged.Lfs.Hosting.Lambda
         {
             builder.UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
-                .UseApiGateway();
+                .UseLambdaServer();
         }
     }
 }

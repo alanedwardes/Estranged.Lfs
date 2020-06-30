@@ -1,5 +1,4 @@
-﻿using Amazon.S3;
-using System;
+﻿using System;
 
 namespace Estranged.Lfs.Adapter.S3
 {
@@ -7,7 +6,6 @@ namespace Estranged.Lfs.Adapter.S3
     {
         string Bucket { get; }
         string KeyPrefix { get; }
-        Protocol Protocol { get; }
         TimeSpan Expiry { get; }
     }
 }
