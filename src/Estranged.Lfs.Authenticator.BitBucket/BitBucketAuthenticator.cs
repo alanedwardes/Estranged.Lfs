@@ -19,10 +19,8 @@ namespace Estranged.Lfs.Authenticator.BitBucket
 
         private IBitBucketClient CreateClient(string username, string password)
         {
-            var client = new HttpClient();
-            client.BaseAddress = new Uri("https://api.bitbucket.org/");
+            var client = new HttpClient { BaseAddress = config.BaseAddress };
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}")));
-
             return new BitBucketClient(client);
         }
 

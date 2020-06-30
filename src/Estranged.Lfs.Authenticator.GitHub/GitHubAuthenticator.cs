@@ -19,7 +19,9 @@ namespace Estranged.Lfs.Authenticator.GitHub
         {
             var assemblyName = GetType().Assembly.GetName();
 
-            var client = new GitHubClient(new Connection(new ProductHeaderValue(assemblyName.Name, assemblyName.Version.ToString(3))))
+            var productHeaderValue = new ProductHeaderValue(assemblyName.Name, assemblyName.Version.ToString(3));
+
+            var client = new GitHubClient(new Connection(productHeaderValue, config.BaseAddress))
             {
                 Credentials = new Credentials(username, password)
             };
