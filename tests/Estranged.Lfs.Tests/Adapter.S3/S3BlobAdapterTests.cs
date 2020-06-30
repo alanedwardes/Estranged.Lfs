@@ -40,5 +40,15 @@ namespace Estranged.Lfs.Tests.Adapter.S3
             Assert.Equal(404, signedBlob.ErrorCode);
             Assert.Equal("Error making request with Error Code NotFound and Http Status Code NotFound. No further error information was returned by the service.", signedBlob.ErrorMessage);
         }
+
+        [Fact]
+        public async Task TestUploadBlob()
+        {
+            var adapter = CreateAdapter();
+
+            var signedBlob = await adapter.UriForUpload("wibble", 10, CancellationToken.None);
+
+            Assert.StartsWith("https://ae-estranged-lfs-integration-tests.s3.eu-west-1.amazonaws.com/wibble", signedBlob.Uri.ToString());
+        }
     }
 }
