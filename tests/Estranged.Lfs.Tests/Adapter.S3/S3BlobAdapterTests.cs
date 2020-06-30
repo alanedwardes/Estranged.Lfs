@@ -14,7 +14,7 @@ namespace Estranged.Lfs.Tests.Adapter.S3
         {
             var config = new S3BlobAdapterConfig
             {
-                Bucket = "ae-estranged-lfs-integration-tests"
+                Bucket = ConfigurationManager.GetS3BucketName()
             };
             return new ServiceCollection().AddLfsS3Adapter(config, new AmazonS3Client()).BuildServiceProvider().GetRequiredService<IBlobAdapter>();
         }
@@ -26,8 +26,10 @@ namespace Estranged.Lfs.Tests.Adapter.S3
 
             var signedBlob = await adapter.UriForDownload("d53de494a038b6a8ede0aea08c38bde00244b155924bf4c463d1de208faecee8", CancellationToken.None);
 
+            Assert.Null(signedBlob.ErrorCode);
+            Assert.Null(signedBlob.ErrorMessage);
             Assert.Equal(19961, signedBlob.Size);
-            Assert.StartsWith("https://ae-estranged-lfs-integration-tests.s3.eu-west-1.amazonaws.com/d53de494a038b6a8ede0aea08c38bde00244b155924bf4c463d1de208faecee8", signedBlob.Uri.ToString());
+            Assert.NotNull(signedBlob.Uri);
         }
 
         [Fact]
@@ -48,7 +50,9 @@ namespace Estranged.Lfs.Tests.Adapter.S3
 
             var signedBlob = await adapter.UriForUpload("wibble", 10, CancellationToken.None);
 
-            Assert.StartsWith("https://ae-estranged-lfs-integration-tests.s3.eu-west-1.amazonaws.com/wibble", signedBlob.Uri.ToString());
+            Assert.Null(signedBlob.ErrorCode);
+            Assert.Null(signedBlob.ErrorMessage);
+            Assert.NotNull(signedBlob.Uri);
         }
     }
 }

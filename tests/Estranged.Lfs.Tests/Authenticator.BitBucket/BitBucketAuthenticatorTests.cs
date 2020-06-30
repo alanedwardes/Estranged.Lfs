@@ -24,7 +24,7 @@ namespace Estranged.Lfs.Tests.Authenticator.BitBucket
                 Repository = "test"
             });
 
-            var (Username, Password) = SecretsManager.GetBitBucketCredentials();
+            var (Username, Password) = ConfigurationManager.GetBitBucketCredentials();
             await authenticator.Authenticate(Username, Password, LfsPermission.Read, CancellationToken.None);
             await authenticator.Authenticate(Username, Password, LfsPermission.Write, CancellationToken.None);
         }
@@ -38,7 +38,7 @@ namespace Estranged.Lfs.Tests.Authenticator.BitBucket
                 Repository = "thg"
             });
 
-            var (Username, Password) = SecretsManager.GetBitBucketCredentials();
+            var (Username, Password) = ConfigurationManager.GetBitBucketCredentials();
             await authenticator.Authenticate(Username, Password, LfsPermission.Read, CancellationToken.None);
         }
 
@@ -51,7 +51,7 @@ namespace Estranged.Lfs.Tests.Authenticator.BitBucket
                 Repository = "ff5deca4-bcc6-4857-800a-90a79c086e0b"
             });
 
-            var (Username, Password) = SecretsManager.GetBitBucketCredentials();
+            var (Username, Password) = ConfigurationManager.GetBitBucketCredentials();
             await Assert.ThrowsAsync<HttpRequestException>(() => authenticator.Authenticate(Username, Password, LfsPermission.Read, CancellationToken.None));
         }
     }
