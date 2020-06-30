@@ -38,7 +38,7 @@ namespace Estranged.Lfs.Hosting.Lambda
             string gitHubRepository = config[GitHubRepositoryVariable];
             string bitBucketWorkspace = config[BitBucketWorkspaceVariable];
             string bitBucketRepository = config[BitBucketRepositoryVariable];
-            bool.TryParse(config[S3AccelerationVariable] ?? "false", out bool s3Acceleration);
+            bool s3Acceleration = bool.Parse(config[S3AccelerationVariable] ?? "false");
 
             bool isDictionaryAuthentication = !string.IsNullOrWhiteSpace(lfsUsername) && !string.IsNullOrWhiteSpace(lfsPassword);
             bool isGitHubAuthentication = !string.IsNullOrWhiteSpace(gitHubOrganisation) && !string.IsNullOrWhiteSpace(gitHubRepository);
