@@ -22,4 +22,7 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Test
+      env:
+        BITBUCKET_CREDENTIALS: ${{ secrets.BITBUCKET_CREDENTIALS }}
+        GH_CREDENTIALS: ${{ secrets.GH_CREDENTIALS }}
       run: dotnet test --no-restore --verbosity normal
