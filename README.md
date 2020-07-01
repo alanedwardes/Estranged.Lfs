@@ -8,7 +8,11 @@ services.AddLfs();
 ```
 2. Register an implementation for IBlobAdapter and IAuthenticator. S3 is provided out of the box:
 ```csharp
-services.AddLfsS3Adapter(new S3BlobAdapterConfig { Bucket = "estranged-lfs-test" }, new AmazonS3Client());
+var s3BlobConfig = new S3BlobAdapterConfig
+{
+    Bucket = "estranged-lfs-test"
+};
+services.AddLfsS3Adapter(s3BlobConfig, new AmazonS3Client());
 services.AddLfsDictionaryAuthenticator(new Dictionary<string, string> { { "username", "password" } });
 ```
 ### GitHub Authenticator
@@ -18,7 +22,11 @@ To configure the GitHub authenticator, you need to register it with the `IServic
 
 ```csharp
 // services.AddLfsDictionaryAuthenticator(new Dictionary<string, string> { { "username", "password" } });
-var ghAuthConfig = new GitHubAuthenticatorConfig { Organisation = "alanedwardes", Repository = "Estranged.Lfs" };
+var ghAuthConfig = new GitHubAuthenticatorConfig
+{
+    Organisation = "alanedwardes",
+    Repository = "Estranged.Lfs"
+};
 services.AddLfsGitHubAuthenticator(ghAuthConfig);
 ```
 
@@ -31,7 +39,11 @@ To configure the BitBucket authenticator, you need to register it with the `ISer
 
 ```csharp
 // services.AddLfsDictionaryAuthenticator(new Dictionary<string, string> { { "username", "password" } });
-var bbAuthConfig = new BitBucketAuthenticatorConfig { Workspace = "alanedwardes", Repository = "Estranged.Lfs" };
+var bbAuthConfig = new BitBucketAuthenticatorConfig
+{
+    Workspace = "alanedwardes",
+    Repository = "Estranged.Lfs"
+};
 services.AddLfsBitBucketAuthenticator(bbAuthConfig);
 ```
 
