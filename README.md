@@ -1,4 +1,4 @@
-# Estranged.Lfs [![Build status](https://ci.appveyor.com/api/projects/status/q5rkhprtqviyurlx?svg=true)](https://ci.appveyor.com/project/alanedwardes/estranged-lfs)
+# Estranged.Lfs ![Build status](https://github.com/alanedwardes/Estranged.Lfs/workflows/.NET%20Core/badge.svg)
 A Git LFS backend which provides pluggable authentication and blob store adapters. It is designed to run in a serverless environment to be used in conjunction with a Git provider such as GitHub or BitBucket, or self hosted Git.
 
 ## Basic Usage
@@ -8,14 +8,34 @@ services.AddLfs();
 ```
 2. Register an implementation for IBlobAdapter and IAuthenticator. S3 is provided out of the box:
 ```csharp
-services.AddSingleton<IBlobAdapter, S3BlobAdapter>();
-services.AddSingleton<IAuthenticator>(x => new DictionaryAuthenticator(new Dictionary<string, string> { { "username", "password" } }));
-
-// Required when using S3BlobAdapter
-services.AddSingleton<IS3BlobAdapterConfig>(x => new S3BlobAdapterConfig { Bucket = "estranged-lfs-test" });
-services.AddSingleton<IAmazonS3>(x => new AmazonS3Client());
+services.AddLfsS3Adapter(new S3BlobAdapterConfig { Bucket = "estranged-lfs-test" }, new AmazonS3Client());
+services.AddLfsDictionaryAuthenticator(new Dictionary<string, string> { { "username", "password" } });
 ```
-To use another blob store or authentication provider, register your own implementations into the services container. See below for more details.
+### GitHub Authenticator
+A GitHub authenticator implementation is provided out of the box. This authenticator takes the supplied username and password and makes a "get repository" call against the GitHub API. If the result is that the user has access, the LFS call succeeds, if the user does not have access, the LFS call fails with a 401 error.
+
+To configure the GitHub authenticator, you need to register it with the `IServiceProvider`:
+
+```csharp
+// services.AddLfsDictionaryAuthenticator(new Dictionary<string, string> { { "username", "password" } });
+var ghAuthConfig = new GitHubAuthenticatorConfig { Organisation = "alanedwardes", Repository = "Estranged.Lfs" };
+services.AddLfsGitHubAuthenticator(ghAuthConfig);
+```
+
+When LFS prompts you for credentials, enter your GitHub username, and a [personal access token](https://github.com/settings/tokens) to authenticate. Your token should have the "repository read" scope.
+
+### BitBucket Authenticator
+A BitBucket authenticator implementation is provided out of the box. This authenticator takes the supplied username and password and makes a "get repository" call against the BitBucket API. If the result is that the user has access, the LFS call succeeds, if the user does not have access, the LFS call fails with a 401 error.
+
+To configure the BitBucket authenticator, you need to register it with the `IServiceProvider`:
+
+```csharp
+// services.AddLfsDictionaryAuthenticator(new Dictionary<string, string> { { "username", "password" } });
+var bbAuthConfig = new BitBucketAuthenticatorConfig { Workspace = "alanedwardes", Repository = "Estranged.Lfs" };
+services.AddLfsBitBucketAuthenticator(bbAuthConfig);
+```
+
+When LFS prompts you for credentials, enter your BitBucket username, and a [personal access token](https://bitbucket.org/account/settings/app-passwords/) to authenticate. Your token should have the "repository read" scope.
 
 ## Extensibility
 
