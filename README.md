@@ -13,7 +13,7 @@ var s3BlobConfig = new S3BlobAdapterConfig
     Bucket = "estranged-lfs-test"
 };
 services.AddLfsS3Adapter(s3BlobConfig, new AmazonS3Client());
-services.AddLfsDictionaryAuthenticator(new Dictionary<string, string> { { "username", "password" } });
+services.AddLfsDictionaryAuthenticator(new Dictionary<string, string>{{"username","password"}});
 ```
 ### GitHub Authenticator
 A GitHub authenticator implementation is provided out of the box. This authenticator takes the supplied username and password and makes a "get repository" call against the GitHub API. If the result is that the user has access, the LFS call succeeds, if the user does not have access, the LFS call fails with a 401 error.
@@ -21,7 +21,7 @@ A GitHub authenticator implementation is provided out of the box. This authentic
 To configure the GitHub authenticator, you need to register it with the `IServiceProvider`:
 
 ```csharp
-// services.AddLfsDictionaryAuthenticator(new Dictionary<string, string> { { "username", "password" } });
+// services.AddLfsDictionaryAuthenticator(new Dictionary<string, string>{{"username","password"}});
 var ghAuthConfig = new GitHubAuthenticatorConfig
 {
     Organisation = "alanedwardes",
@@ -38,7 +38,7 @@ A BitBucket authenticator implementation is provided out of the box. This authen
 To configure the BitBucket authenticator, you need to register it with the `IServiceProvider`:
 
 ```csharp
-// services.AddLfsDictionaryAuthenticator(new Dictionary<string, string> { { "username", "password" } });
+// services.AddLfsDictionaryAuthenticator(new Dictionary<string, string>{{"username","password"}});
 var bbAuthConfig = new BitBucketAuthenticatorConfig
 {
     Workspace = "alanedwardes",
