@@ -57,8 +57,8 @@ Any blob store which generates pre-signed URLs can be used by implementing the i
 ```csharp
 public interface IBlobAdapter
 {
-    Task<SignedBlob> UriForUpload(string Oid, long size);
-    Task<SignedBlob> UriForDownload(string Oid);
+    Task<SignedBlob> UriForUpload(string oid, long size, CancellationToken token);
+    Task<SignedBlob> UriForDownload(string oid, CancellationToken token);
 }
 ```
 An S3 implementation is included, which generates pre-signed GET and PUT requests. This can be used out of the box if desired.
@@ -69,7 +69,7 @@ Git LFS supports HTTP Basic authentication, the mechanics of which the library d
 ```csharp
 public interface IAuthenticator
 {
-    bool Authenticate(string username, string password);
+    Task Authenticate(string username, string password, LfsPermission requiredPermission, CancellationToken token);
 }
 ```
 A sample implementation exposing a dictionary of username => password is included as a reference.
