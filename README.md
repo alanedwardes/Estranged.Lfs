@@ -76,7 +76,7 @@ A sample implementation exposing a dictionary of username => password is include
 
 ## Example Deployables
 There are currently two hosting examples:
-* Estranged.Lfs.Hosting.AspNet
-* Estranged.Lfs.Hosting.Lambda
+* `Estranged.Lfs.Hosting.AspNet`
+* `Estranged.Lfs.Hosting.Lambda`
 
 The former is a simple example using only Asp.NET components, and the latter is an Asp.NET Lambda function which can be deployed directly to AWS Lambda, behind API Gateway.
