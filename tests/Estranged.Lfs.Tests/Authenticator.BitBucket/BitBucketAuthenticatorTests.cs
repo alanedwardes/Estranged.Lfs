@@ -21,7 +21,7 @@ namespace Estranged.Lfs.Tests.Authenticator.BitBucket
             var authenticator = CreateAuthenticator(new BitBucketAuthenticatorConfig
             {
                 Workspace = "alanedwardes",
-                Repository = "test"
+                Repository = "test-private"
             });
 
             var (Username, Password) = ConfigurationManager.GetBitBucketCredentials();
@@ -34,8 +34,8 @@ namespace Estranged.Lfs.Tests.Authenticator.BitBucket
         {
             var authenticator = CreateAuthenticator(new BitBucketAuthenticatorConfig
             {
-                Workspace = "tortoisehg",
-                Repository = "thg"
+                Workspace = "alanedwardes",
+                Repository = "test-public"
             });
 
             var (Username, Password) = ConfigurationManager.GetBitBucketCredentials();
