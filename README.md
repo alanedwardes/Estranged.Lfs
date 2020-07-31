@@ -80,3 +80,27 @@ There are currently two hosting examples:
 * `Estranged.Lfs.Hosting.Lambda`
 
 The former is a simple example using only Asp.NET components, and the latter is an Asp.NET Lambda function which can be deployed directly to AWS Lambda, behind API Gateway.
+
+#### Deploying to Lambda
+
+1. Head over to the `Estranged.Lfs.Hosting.Lambda` project in the `hosting` folder.
+2. Install the `dotnet-lambda` global tool from AWS: https://github.com/aws/aws-extensions-for-dotnet-cli
+3. Edit the `aws-lambda-tools-defaults.json` file to suit your environment setup:
+```javascript
+{
+    "profile": "default",
+    "configuration": "Release",
+    "framework": "netcoreapp3.1",
+    "function-handler": "Estranged.Lfs.Hosting.Lambda::Estranged.Lfs.Hosting.Lambda.LambdaEntryPoint::FunctionHandlerAsync",
+    "function-memory-size": 256,
+    "function-timeout": 30,
+    "function-runtime": "dotnetcore3.1",
+    "region": "<aws region>",
+    "s3-bucket": "<s3 bucket to upload the lambda to>",
+    "s3-prefix": "<path in s3 to upload the lambda to>",
+    "function-name": "<lambda name to deploy or update>",
+    // Set other variables required by the Lambda function
+    "environment-variables": "LFS_BUCKET=<lfs s3 bucket>;<key>=<value>"
+}
+```
+4. Run `dotnet-lambda deploy-serverless` to deploy the Lambda function
