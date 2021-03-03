@@ -23,5 +23,10 @@ namespace Estranged.Lfs.Tests
         {
             return ParseUsernamePasswordCredentials(Configuration["GH_CREDENTIALS"]);
         }
+
+        public static string GetAzureStorageAccountConnectionString()
+        {
+            return Configuration["AZURE_STORAGE_CONNECTIONSTRING"];
+        }
     }
 }

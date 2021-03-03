@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.8.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.5" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.5" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.5" />
@@ -18,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Estranged.Lfs.Adapter.Azure.Blob\Estranged.Lfs.Adapter.Azure.Blob.csproj" />
     <ProjectReference Include="..\..\src\Estranged.Lfs.Adapter.S3\Estranged.Lfs.Adapter.S3.csproj" />
     <ProjectReference Include="..\..\src\Estranged.Lfs.Authenticator.BitBucket\Estranged.Lfs.Authenticator.BitBucket.csproj" />
     <ProjectReference Include="..\..\src\Estranged.Lfs.Authenticator.GitHub\Estranged.Lfs.Authenticator.GitHub.csproj" />
