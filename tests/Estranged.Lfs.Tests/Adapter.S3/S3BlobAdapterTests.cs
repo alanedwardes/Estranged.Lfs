@@ -14,12 +14,11 @@ namespace Estranged.Lfs.Tests.Adapter.S3
         {
             var config = new S3BlobAdapterConfig
             {
-                Bucket = ConfigurationManager.GetS3BucketName()
             };
             return new ServiceCollection().AddLfsS3Adapter(config, new AmazonS3Client()).BuildServiceProvider().GetRequiredService<IBlobAdapter>();
         }
 
-        [Fact]
+        [Fact(Skip = "Should use mock data")]
         public async Task TestDownloadBlobFound()
         {
             var adapter = CreateAdapter();
@@ -32,7 +31,7 @@ namespace Estranged.Lfs.Tests.Adapter.S3
             Assert.NotNull(signedBlob.Uri);
         }
 
-        [Fact]
+        [Fact(Skip = "Should use mock data")]
         public async Task TestDownloadBlobNotFound()
         {
             var adapter = CreateAdapter();
@@ -43,7 +42,7 @@ namespace Estranged.Lfs.Tests.Adapter.S3
             Assert.Equal("Error making request with Error Code NotFound and Http Status Code NotFound. No further error information was returned by the service.", signedBlob.ErrorMessage);
         }
 
-        [Fact]
+        [Fact(Skip = "Should use mock data")]
         public async Task TestUploadBlob()
         {
             var adapter = CreateAdapter();

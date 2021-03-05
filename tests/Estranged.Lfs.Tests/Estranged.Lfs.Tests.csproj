@@ -23,10 +23,4 @@
     <ProjectReference Include="..\..\src\Estranged.Lfs.Authenticator.GitHub\Estranged.Lfs.Authenticator.GitHub.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="credentials.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
