@@ -1,5 +1,4 @@
 ﻿using Estranged.Lfs.Data;
-using Octokit;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,29 +8,17 @@ namespace Estranged.Lfs.Authenticator.GitHub
     internal sealed class GitHubAuthenticator : IAuthenticator
     {
         private readonly IGitHubAuthenticatorConfig config;
+        private readonly IGitHubClientFactory clientFactory;
 
-        public GitHubAuthenticator(IGitHubAuthenticatorConfig config)
+        public GitHubAuthenticator(IGitHubAuthenticatorConfig config, IGitHubClientFactory clientFactory)
         {
             this.config = config;
-        }
-
-        private IRepositoriesClient CreateClient(string username, string password)
-        {
-            var assemblyName = GetType().Assembly.GetName();
-
-            var productHeaderValue = new ProductHeaderValue(assemblyName.Name, assemblyName.Version.ToString(3));
-
-            var client = new GitHubClient(new Connection(productHeaderValue, config.BaseAddress))
-            {
-                Credentials = new Credentials(username, password)
-            };
-
-            return client.Repository;
+            this.clientFactory = clientFactory;
         }
 
         public async Task Authenticate(string username, string password, LfsPermission requiredPermission, CancellationToken token)
         {
-            var client = CreateClient(username, password);
+            var client = clientFactory.CreateClient(config.BaseAddress, username, password);
 
             var repository = await client.Get(config.Organisation, config.Repository);
 

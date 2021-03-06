@@ -1,76 +1,91 @@
 ﻿using Estranged.Lfs.Authenticator.GitHub;
 using Estranged.Lfs.Data;
-using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using Octokit;
 using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Estranged.Lfs.Tests.Authenticator.GitHub
 {
-    public class GitHubAuthenticatorTests
+    public class GitHubAuthenticatorTests : IDisposable
     {
-        private IAuthenticator CreateAuthenticator(IGitHubAuthenticatorConfig config)
+        private readonly MockRepository mockRepository = new MockRepository(MockBehavior.Strict);
+
+        public void Dispose() => mockRepository.VerifyAll();
+
+        private class MockGitHubRepository : Repository
         {
-            return new ServiceCollection().AddLfsGitHubAuthenticator(config).BuildServiceProvider().GetRequiredService<IAuthenticator>();
+            public MockGitHubRepository(bool admin, bool canPush, bool canPull) => Permissions = new RepositoryPermissions(admin, canPush, canPull);
         }
 
-        [Fact(Skip = "Should use mock data")]
+        [Fact]
         public async Task TestAuthenticatePrivateRepositoryReadWriteSuccessful()
         {
-            var authenticator = CreateAuthenticator(new GitHubAuthenticatorConfig
-            {
-                Organisation = "alanedwardes",
-                Repository = "test"
-            });
+            var factory = mockRepository.Create<IGitHubClientFactory>();
+            var client = mockRepository.Create<IRepositoriesClient>();
 
-            var username = "mock";
-            var password = "mock";
-            await authenticator.Authenticate(username, password, LfsPermission.Read, CancellationToken.None);
-            await authenticator.Authenticate(username, password, LfsPermission.Write, CancellationToken.None);
+            factory.Setup(x => x.CreateClient(new Uri("https://www.example.com/"), "username", "password"))
+                   .Returns(client.Object);
+
+            client.Setup(x => x.Get("organisation", "repository"))
+                  .ReturnsAsync(new MockGitHubRepository(false, true, true));
+
+            var authenticator = new GitHubAuthenticator(new GitHubAuthenticatorConfig
+            {
+                Organisation = "organisation",
+                Repository = "repository",
+                BaseAddress = new Uri("https://www.example.com/")
+            }, factory.Object);
+
+            await authenticator.Authenticate("username", "password", LfsPermission.Read, CancellationToken.None);
+            await authenticator.Authenticate("username", "password", LfsPermission.Write, CancellationToken.None);
         }
 
-        [Fact(Skip = "Should use mock data")]
-        public async Task TestAuthenticatePublicRepositoryReadSuccessful()
-        {
-            var authenticator = CreateAuthenticator(new GitHubAuthenticatorConfig
-            {
-                Organisation = "dotnet",
-                Repository = "runtime"
-            });
-
-            var username = "mock";
-            var password = "mock";
-            await authenticator.Authenticate(username, password, LfsPermission.Read, CancellationToken.None);
-        }
-
-        [Fact(Skip = "Should use mock data")]
+        [Fact]
         public async Task TestAuthenticatePublicRepositoryWriteUnsuccessful()
         {
-            var authenticator = CreateAuthenticator(new GitHubAuthenticatorConfig
-            {
-                Organisation = "dotnet",
-                Repository = "runtime"
-            });
+            var factory = mockRepository.Create<IGitHubClientFactory>();
+            var client = mockRepository.Create<IRepositoriesClient>();
 
-            var username = "mock";
-            var password = "mock";
-            await Assert.ThrowsAsync<InvalidOperationException>(() => authenticator.Authenticate(username, password, LfsPermission.Write, CancellationToken.None));
+            factory.Setup(x => x.CreateClient(new Uri("https://www.example.com/"), "username", "password"))
+                   .Returns(client.Object);
+
+            client.Setup(x => x.Get("organisation", "repository"))
+                  .ReturnsAsync(new MockGitHubRepository(false, false, true));
+
+            var authenticator = new GitHubAuthenticator(new GitHubAuthenticatorConfig
+            {
+                Organisation = "organisation",
+                Repository = "repository",
+                BaseAddress = new Uri("https://www.example.com/")
+            }, factory.Object);
+
+            await Assert.ThrowsAsync<InvalidOperationException>(() => authenticator.Authenticate("username", "password", LfsPermission.Write, CancellationToken.None));
         }
 
-        [Fact(Skip = "Should use mock data")]
+        [Fact]
         public async Task TestAuthenticateInvalidRepository()
         {
-            var authenticator = CreateAuthenticator(new GitHubAuthenticatorConfig
-            {
-                Organisation = "f5155156-f2e5-49da-b93f-c9a0f409cf4c",
-                Repository = "ff5deca4-bcc6-4857-800a-90a79c086e0b"
-            });
+            var factory = mockRepository.Create<IGitHubClientFactory>();
+            var client = mockRepository.Create<IRepositoriesClient>();
 
-            var username = "mock";
-            var password = "mock";
-            await Assert.ThrowsAsync<NotFoundException>(() => authenticator.Authenticate(username, password, LfsPermission.Write, CancellationToken.None));
+            factory.Setup(x => x.CreateClient(new Uri("https://www.example.com/"), "username", "password"))
+                   .Returns(client.Object);
+
+            client.Setup(x => x.Get("organisation", "repository"))
+                  .ThrowsAsync(new NotFoundException("message", HttpStatusCode.NotFound));
+
+            var authenticator = new GitHubAuthenticator(new GitHubAuthenticatorConfig
+            {
+                Organisation = "organisation",
+                Repository = "repository",
+                BaseAddress = new Uri("https://www.example.com/")
+            }, factory.Object);
+
+            await Assert.ThrowsAsync<NotFoundException>(() => authenticator.Authenticate("username", "password", LfsPermission.Write, CancellationToken.None));
         }
     }
 }
