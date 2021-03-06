@@ -1,6 +1,8 @@
 ﻿using Estranged.Lfs.Authenticator.BitBucket;
+using Estranged.Lfs.Authenticator.BitBucket.Entities;
 using Estranged.Lfs.Data;
-using Microsoft.Extensions.DependencyInjection;
+using Moq;
+using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,54 +10,55 @@ using Xunit;
 
 namespace Estranged.Lfs.Tests.Authenticator.BitBucket
 {
-    public class BitBucketAuthenticatorTests
+    public class BitBucketAuthenticatorTests : IDisposable
     {
-        private IAuthenticator CreateAuthenticator(IBitBucketAuthenticatorConfig config)
-        {
-            return new ServiceCollection().AddLfsBitBucketAuthenticator(config).BuildServiceProvider().GetRequiredService<IAuthenticator>();
-        }
+        private readonly MockRepository mockRepository = new MockRepository(MockBehavior.Strict);
 
-        [Fact(Skip = "Should use mock data")]
+        public void Dispose() => mockRepository.VerifyAll();
+
+        [Fact]
         public async Task TestAuthenticatePrivateRepositorySuccessful()
         {
-            var authenticator = CreateAuthenticator(new BitBucketAuthenticatorConfig
-            {
-                Workspace = "alanedwardes",
-                Repository = "test-private"
-            });
+            var factory = mockRepository.Create<IBitBucketClientFactory>();
+            var client = mockRepository.Create<IBitBucketClient>();
 
-            var username = "mock";
-            var password = "mock";
-            await authenticator.Authenticate(username, password, LfsPermission.Read, CancellationToken.None);
-            await authenticator.Authenticate(username, password, LfsPermission.Write, CancellationToken.None);
+            factory.Setup(x => x.CreateClient(new Uri("https://www.example.com/"), "username", "password"))
+                   .Returns(client.Object);
+
+            client.Setup(x => x.GetRepository("workspace", "repository", CancellationToken.None))
+                  .ReturnsAsync(new Repository());
+
+            var authenticator = new BitBucketAuthenticator(new BitBucketAuthenticatorConfig
+            {
+                Workspace = "workspace",
+                Repository = "repository",
+                BaseAddress = new Uri("https://www.example.com/")
+            }, factory.Object);
+
+            await authenticator.Authenticate("username", "password", LfsPermission.Read, CancellationToken.None);
+            await authenticator.Authenticate("username", "password", LfsPermission.Write, CancellationToken.None);
         }
 
-        [Fact(Skip = "Should use mock data")]
-        public async Task TestAuthenticatePublicRepositorySuccessful()
-        {
-            var authenticator = CreateAuthenticator(new BitBucketAuthenticatorConfig
-            {
-                Workspace = "alanedwardes",
-                Repository = "test-public"
-            });
-
-            var username = "mock";
-            var password = "mock";
-            await authenticator.Authenticate(username, password, LfsPermission.Read, CancellationToken.None);
-        }
-
-        [Fact(Skip = "Should use mock data")]
+        [Fact]
         public async Task TestAuthenticateInvalidRepository()
         {
-            var authenticator = CreateAuthenticator(new BitBucketAuthenticatorConfig
-            {
-                Workspace = "f5155156-f2e5-49da-b93f-c9a0f409cf4c",
-                Repository = "ff5deca4-bcc6-4857-800a-90a79c086e0b"
-            });
+            var factory = mockRepository.Create<IBitBucketClientFactory>();
+            var client = mockRepository.Create<IBitBucketClient>();
 
-            var username = "mock";
-            var password = "mock";
-            await Assert.ThrowsAsync<HttpRequestException>(() => authenticator.Authenticate(username, password, LfsPermission.Read, CancellationToken.None));
+            factory.Setup(x => x.CreateClient(new Uri("https://www.example.com/"), "username", "password"))
+                   .Returns(client.Object);
+
+            client.Setup(x => x.GetRepository("workspace", "repository", CancellationToken.None))
+                  .ThrowsAsync(new HttpRequestException());
+
+            var authenticator = new BitBucketAuthenticator(new BitBucketAuthenticatorConfig
+            {
+                Workspace = "workspace",
+                Repository = "repository",
+                BaseAddress = new Uri("https://www.example.com/")
+            }, factory.Object);
+
+            await Assert.ThrowsAsync<HttpRequestException>(() => authenticator.Authenticate("username", "password", LfsPermission.Read, CancellationToken.None));
         }
     }
 }
