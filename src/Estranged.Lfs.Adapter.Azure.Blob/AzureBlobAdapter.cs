@@ -40,7 +40,8 @@ namespace Estranged.Lfs.Adapter.Azure.Blob
                 Expiry = _config.Expiry,
                 Headers = new Dictionary<string, string>
                 {
-                    ["Content-Type"] = BlobConstants.UploadMimeType
+                    ["Content-Type"] = BlobConstants.UploadMimeType,
+                    ["x-ms-blob-type"] = "BlockBlob"
                 }
             };
 
