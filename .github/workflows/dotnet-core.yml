@@ -22,11 +22,4 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Test
-      env:
-        BITBUCKET_CREDENTIALS: ${{ secrets.BITBUCKET_CREDENTIALS }}
-        GH_CREDENTIALS: ${{ secrets.GH_CREDENTIALS }}
-        S3_BUCKET: ae-estranged-lfs-integration-tests
-        AWS_REGION: eu-west-1
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: dotnet test --no-restore --verbosity normal

@@ -7,7 +7,9 @@ namespace Estranged.Lfs.Authenticator.BitBucket
     {
         public static IServiceCollection AddLfsBitBucketAuthenticator(this IServiceCollection services, IBitBucketAuthenticatorConfig config)
         {
-            return services.AddSingleton<IAuthenticator, BitBucketAuthenticator>().AddSingleton(config);
+            return services.AddSingleton<IAuthenticator, BitBucketAuthenticator>()
+                           .AddSingleton<IBitBucketClientFactory, BitBucketClientFactory>()
+                           .AddSingleton(config);
         }
     }
 }
