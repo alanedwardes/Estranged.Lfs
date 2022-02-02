@@ -6,8 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Estranged.Lfs.Adapter.S3\Estranged.Lfs.Adapter.S3.csproj" />
+    <ProjectReference Include="..\..\src\Estranged.Lfs.Adapter.Azure.Blob\Estranged.Lfs.Adapter.Azure.Blob.csproj" />
     <ProjectReference Include="..\..\src\Estranged.Lfs.Api\Estranged.Lfs.Api.csproj" />
+    <ProjectReference Include="..\..\src\Estranged.Lfs.Authenticator.GitHub\Estranged.Lfs.Authenticator.GitHub.csproj" />
+    <ProjectReference Include="..\..\src\Estranged.Lfs.Data\Estranged.Lfs.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="credentials.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

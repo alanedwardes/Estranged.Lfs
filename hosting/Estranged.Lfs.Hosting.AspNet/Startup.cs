@@ -2,10 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Estranged.Lfs.Api;
-using Amazon.S3;
+using Estranged.Lfs.Adapter.Azure.Blob;
 using Microsoft.Extensions.Configuration;
-using Estranged.Lfs.Adapter.S3;
 using Estranged.Lfs.Data;
+using Estranged.Lfs.Authenticator.GitHub;
 using System.Collections.Generic;
 
 namespace Estranged.Lfs.Hosting.AspNet
@@ -14,7 +14,9 @@ namespace Estranged.Lfs.Hosting.AspNet
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            IConfiguration credentials = new ConfigurationBuilder().AddJsonFile("credentials.json").Build();
+            IConfiguration credentials = new ConfigurationBuilder()
+                .AddJsonFile("credentials.json")
+                .Build();
 
             services.AddLogging(x =>
             {
@@ -22,9 +24,24 @@ namespace Estranged.Lfs.Hosting.AspNet
                 x.AddDebug();
             });
 
-            services.AddSingleton<IAmazonS3, AmazonS3Client>();
-            services.AddLfsS3Adapter(new S3BlobAdapterConfig{Bucket = "estranged-lfs-test"}, new AmazonS3Client());
-            services.AddSingleton<IAuthenticator>(x => new DictionaryAuthenticator(new Dictionary<string, string> { { "usernametest", "passwordtest" } }));
+            services.AddLfsGitHubAuthenticator(new GitHubAuthenticatorConfig 
+            { 
+                Organisation = credentials["GitHubOrganisation"],
+                Repository = credentials["GitHubRepository"] 
+            });
+
+            services.AddLfsAzureBlobAdapter(new AzureBlobAdapterConfig
+            {
+                ConnectionString = credentials["LfsAzureStorageConnectionString"],
+                ContainerName = credentials["LfsAzureStorageContainerName"]
+            });
+
+            services.AddSingleton<IAuthenticator>(
+                x => new DictionaryAuthenticator(
+                    new Dictionary<string, string> {
+                        { credentials["AuthUserName"], credentials["AuthPassword"] }
+                    }));
+
             services.AddLfsApi();
         }
 
