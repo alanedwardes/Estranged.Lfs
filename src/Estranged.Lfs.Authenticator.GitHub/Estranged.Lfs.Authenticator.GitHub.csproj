@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>3.1.0</Version>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <Version>4.0.0</Version>
+    <TargetFramework>net6.0</TargetFramework>
     <Authors>alanedwardes</Authors>
     <Description>A GitHub authentication adapter for Estranged.Lfs.Api.</Description>
     <PackageId>Estranged.Lfs.Authenticator.GitHub</PackageId>
@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Octokit" Version="0.48.0" />
+    <PackageReference Include="Octokit" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

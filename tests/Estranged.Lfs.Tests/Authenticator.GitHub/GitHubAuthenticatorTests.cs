@@ -18,7 +18,7 @@ namespace Estranged.Lfs.Tests.Authenticator.GitHub
 
         private class MockGitHubRepository : Repository
         {
-            public MockGitHubRepository(bool admin, bool canPush, bool canPull) => Permissions = new RepositoryPermissions(admin, canPush, canPull);
+            public MockGitHubRepository(bool admin, bool canPush, bool canPull) => Permissions = new RepositoryPermissions(admin, admin, canPush, false, canPull);
         }
 
         [Fact]

@@ -2,13 +2,13 @@
   "profile": "ae-lambda-publish",
   "region": "eu-west-1",
   "configuration": "Release",
-  "framework": "netcoreapp3.1",
+  "framework": "net6.0",
   "s3-prefix": "Estranged.Lfs.Hosting.Lambda/",
   "s3-bucket": "ae-temp",
   "function-name": "EstrangedLambdaLfs",
   "function-handler": "Estranged.Lfs.Hosting.Lambda::Estranged.Lfs.Hosting.Lambda.LambdaEntryPoint::FunctionHandlerAsync",
   "function-memory-size": 256,
   "function-timeout": 30,
-  "function-runtime": "dotnetcore3.1",
+  "function-runtime": "net6.0",
   "environment-variables": ""
 }
