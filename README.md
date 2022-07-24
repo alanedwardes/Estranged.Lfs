@@ -119,11 +119,11 @@ The former is a simple example using only Asp.NET components, and the latter is 
 {
     "profile": "default",
     "configuration": "Release",
-    "framework": "netcoreapp3.1",
+    "framework": "net6.0",
     "function-handler": "Estranged.Lfs.Hosting.Lambda::Estranged.Lfs.Hosting.Lambda.LambdaEntryPoint::FunctionHandlerAsync",
     "function-memory-size": 256,
     "function-timeout": 30,
-    "function-runtime": "dotnetcore3.1",
+    "function-runtime": "dotnet6",
     "region": "<aws region>",
     "s3-bucket": "<s3 bucket to upload the lambda to>",
     "s3-prefix": "<path in s3 to upload the lambda to>",
