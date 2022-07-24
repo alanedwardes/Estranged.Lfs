@@ -9,6 +9,6 @@
   "function-handler": "Estranged.Lfs.Hosting.Lambda::Estranged.Lfs.Hosting.Lambda.LambdaEntryPoint::FunctionHandlerAsync",
   "function-memory-size": 256,
   "function-timeout": 30,
-  "function-runtime": "net6.0",
+  "function-runtime": "dotnet6",
   "environment-variables": ""
 }
