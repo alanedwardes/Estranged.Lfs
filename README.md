@@ -167,14 +167,16 @@ url = https://localhost:5001/
 }
 ```
 4. Run `dotnet lambda deploy-serverless` to deploy the stack
-5. Run `dotnet lambda deploy-function` to deploy the code of the lambda function
-6. Change the .lfconfig of the GIT project to send requests to the lambda function (the URL was in 4. output)
+
+    If the stack is already deployed, run `dotnet lambda deploy-function` to redeploy only the code of the lambda function
+
+5. Change the .lfconfig of the GIT project to send requests to the lambda function (the URL was in 4. output)
 ```
 [lfs]
 url = https://xxxxxxxxx.execute-api.eu-west-1.amazonaws.com/lfs
 ```
 
-8. Commit and push LFS files, when prompt enter AWS_STACK_ParameterUsername and AWS_STACK_ParameterPassword, the files can be seen in your S3 storage!
+6. Commit and push LFS files, when prompt enter AWS_STACK_ParameterUsername and AWS_STACK_ParameterPassword, the files can be seen in your S3 storage!
 
 **Instead of using user/password authentication, it is possible to use Github or Bitbucket authentication.**
 
