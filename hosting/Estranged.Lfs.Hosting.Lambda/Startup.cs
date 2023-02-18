@@ -29,6 +29,10 @@ namespace Estranged.Lfs.Hosting.Lambda
             const string S3AccelerationVariable = "S3_ACCELERATION";
             const string LfsAzureStorageConnectionStringVariable = "LFS_AZUREBLOB_CONNECTIONSTRING";
             const string LfsAzureStorageContainerNameVariable = "LFS_AZUREBLOB_CONTAINERNAME";
+            const string S3ServiceURL = "S3_SERVICE_URL";
+            const string S3Region = "S3_REGION";
+            const string S3AccessKey = "S3_ACCESS_KEY";
+            const string S3AccessSecret = "S3_ACCESS_SECRET";
 
             var config = new ConfigurationBuilder()
                 .AddEnvironmentVariables()
@@ -43,6 +47,10 @@ namespace Estranged.Lfs.Hosting.Lambda
             string bitBucketWorkspace = config[BitBucketWorkspaceVariable];
             string bitBucketRepository = config[BitBucketRepositoryVariable];
             bool s3Acceleration = bool.Parse(config[S3AccelerationVariable] ?? "false");
+            string s3ServiceURL = config[S3ServiceURL];
+            string s3Region = config[S3Region];
+            string s3AccessKey = config[S3AccessKey];
+            string s3AccessSecret = config[S3AccessSecret];
 
             bool isS3Storage = !string.IsNullOrWhiteSpace(lfsBucket);
             bool isAzureStorage = !string.IsNullOrWhiteSpace(lfsAzureStorageConnectionString);
@@ -74,7 +82,15 @@ namespace Estranged.Lfs.Hosting.Lambda
 
             if (isS3Storage)
             {
-                services.AddLfsS3Adapter(new S3BlobAdapterConfig { Bucket = lfsBucket }, new AmazonS3Client(new AmazonS3Config { UseAccelerateEndpoint = s3Acceleration }));
+                if (!string.IsNullOrWhiteSpace(s3ServiceURL) && !string.IsNullOrWhiteSpace(s3Region) && !string.IsNullOrWhiteSpace(s3AccessKey) && !string.IsNullOrWhiteSpace(s3AccessSecret))
+                {
+                    services.AddLfsS3Adapter(new S3BlobAdapterConfig { Bucket = lfsBucket }, new AmazonS3Client(s3AccessKey, s3AccessSecret, new AmazonS3Config { UseAccelerateEndpoint = s3Acceleration, ServiceURL = s3ServiceURL, AuthenticationRegion = s3Region, SignatureVersion = "V4" }));
+
+                }
+                else
+                {
+                    services.AddLfsS3Adapter(new S3BlobAdapterConfig { Bucket = lfsBucket }, new AmazonS3Client(new AmazonS3Config { UseAccelerateEndpoint = s3Acceleration }));
+                }
             }
             else if (isAzureStorage)
             {
