@@ -1,6 +1,6 @@
 ﻿$ErrorActionPreference = "Stop"
 
-$OutputFolder = "hosting/Estranged.Lfs.Hosting.Lambda/bin/Release/net6.0/linux-x64/publish"
+$OutputFolder = "hosting/Estranged.Lfs.Hosting.Lambda/bin/Release/net8.0/linux-x64/publish"
 $OutputFile = "Estranged.Lfs.Hosting.Lambda.zip"
 $InputProject = "hosting/Estranged.Lfs.Hosting.Lambda/Estranged.Lfs.Hosting.Lambda.csproj"
 
