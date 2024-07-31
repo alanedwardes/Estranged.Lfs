@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>4.0.0</Version>
-    <TargetFramework>net6.0</TargetFramework>
+    <Version>5.0.0</Version>
+    <TargetFramework>net8.0</TargetFramework>
     <Authors>alanedwardes,stephanvs</Authors>
     <Description>An Azure Storage Accounts adapter for Estranged.Lfs</Description>
     <PackageId>Estranged.Lfs.Adapter.Azure.Blob</PackageId>

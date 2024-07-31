@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>4.0.0</Version>
-    <TargetFramework>net6.0</TargetFramework>
+    <Version>5.0.0</Version>
+    <TargetFramework>net8.0</TargetFramework>
     <Authors>alanedwardes</Authors>
     <Description>A BitBucket authentication adapter for Estranged.Lfs.Api.</Description>
     <PackageId>Estranged.Lfs.Authenticator.BitBucket</PackageId>
