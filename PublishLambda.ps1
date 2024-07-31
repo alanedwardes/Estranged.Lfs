@@ -10,7 +10,7 @@ Remove-Item -LiteralPath $OutputFolder -Force -Recurse -ErrorAction Ignore
 
 dotnet publish $InputProject `
     --configuration "Release" `
-    --framework "net6.0" `
+    --framework "net8.0" `
     /p:GenerateRuntimeConfigurationFiles=true `
     --runtime linux-x64 `
     --self-contained false
