@@ -1,5 +1,9 @@
 # Estranged.Lfs ![Build status](https://github.com/alanedwardes/Estranged.Lfs/workflows/.NET%20Core/badge.svg)
 
+### For setup instructions, see https://alanedwardes.com/blog/posts/serverless-git-lfs-for-game-dev/
+
+---
+
 A Git LFS backend which provides pluggable authentication and blob store adapters. It is designed to run in a serverless environment to be used in conjunction with a Git provider such as GitHub or BitBucket, or self hosted Git.
 
 ## Basic Usage
