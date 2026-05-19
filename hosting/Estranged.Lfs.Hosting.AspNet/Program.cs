@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 
 namespace Estranged.Lfs.Hosting.AspNet
 {
@@ -7,12 +6,15 @@ namespace Estranged.Lfs.Hosting.AspNet
     {
         public static void Main(string[] args)
         {
-            var host = new WebHostBuilder()
-                .UseKestrel()
-                .UseStartup<Startup>()
-                .Build();
+            var builder = WebApplication.CreateBuilder(args);
 
-            host.Run();
+            var startup = new Startup(builder.Configuration);
+            startup.ConfigureServices(builder.Services);
+
+            var app = builder.Build();
+            startup.Configure(app, app.Environment);
+
+            app.Run();
         }
     }
 }

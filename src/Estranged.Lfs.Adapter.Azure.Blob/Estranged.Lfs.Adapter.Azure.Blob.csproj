@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Version>5.0.0</Version>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Authors>alanedwardes,stephanvs</Authors>
     <Description>An Azure Storage Accounts adapter for Estranged.Lfs</Description>
     <PackageId>Estranged.Lfs.Adapter.Azure.Blob</PackageId>

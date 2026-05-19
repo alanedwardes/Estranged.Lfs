@@ -4,6 +4,7 @@ using Moq;
 using Octokit;
 using System;
 using System.Net;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -16,9 +17,19 @@ namespace Estranged.Lfs.Tests.Authenticator.GitHub
 
         public void Dispose() => mockRepository.VerifyAll();
 
-        private class MockGitHubRepository : Repository
+        private Repository CreateMockRepository(bool admin, bool canPush, bool canPull)
         {
-            public MockGitHubRepository(bool admin, bool canPush, bool canPull) => Permissions = new RepositoryPermissions(admin, admin, canPush, false, canPull);
+            // Create an "empty" Repository
+            var repo = (Repository)Activator.CreateInstance(typeof(Repository), true);
+
+            // Access the "Permissions" private property via reflection
+            var property = typeof(Repository).GetProperty("Permissions", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            if (property != null && property.CanWrite)
+            {
+                property.SetValue(repo, new RepositoryPermissions(admin, admin, canPush, false, canPull));
+            }
+
+            return repo;
         }
 
         [Fact]
@@ -31,7 +42,7 @@ namespace Estranged.Lfs.Tests.Authenticator.GitHub
                    .Returns(client.Object);
 
             client.Setup(x => x.Get("organisation", "repository"))
-                  .ReturnsAsync(new MockGitHubRepository(false, true, true));
+                  .ReturnsAsync(CreateMockRepository(false, true, true));
 
             var authenticator = new GitHubAuthenticator(new GitHubAuthenticatorConfig
             {
@@ -54,7 +65,7 @@ namespace Estranged.Lfs.Tests.Authenticator.GitHub
                    .Returns(client.Object);
 
             client.Setup(x => x.Get("organisation", "repository"))
-                  .ReturnsAsync(new MockGitHubRepository(false, false, true));
+                  .ReturnsAsync(CreateMockRepository(false, false, true));
 
             var authenticator = new GitHubAuthenticator(new GitHubAuthenticatorConfig
             {
@@ -63,7 +74,8 @@ namespace Estranged.Lfs.Tests.Authenticator.GitHub
                 BaseAddress = new Uri("https://www.example.com/")
             }, factory.Object);
 
-            await Assert.ThrowsAsync<InvalidOperationException>(() => authenticator.Authenticate("username", "password", LfsPermission.Write, CancellationToken.None));
+            await Assert.ThrowsAsync<InvalidOperationException>(() =>
+                authenticator.Authenticate("username", "password", LfsPermission.Write, CancellationToken.None));
         }
 
         [Fact]
@@ -85,7 +97,8 @@ namespace Estranged.Lfs.Tests.Authenticator.GitHub
                 BaseAddress = new Uri("https://www.example.com/")
             }, factory.Object);
 
-            await Assert.ThrowsAsync<NotFoundException>(() => authenticator.Authenticate("username", "password", LfsPermission.Write, CancellationToken.None));
+            await Assert.ThrowsAsync<NotFoundException>(() =>
+                authenticator.Authenticate("username", "password", LfsPermission.Write, CancellationToken.None));
         }
     }
 }

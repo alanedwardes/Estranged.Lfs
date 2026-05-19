@@ -1,15 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <OutputTypeEx>exe</OutputTypeEx>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <FileUpgradeFlags>40</FileUpgradeFlags>
+    <UpgradeBackupLocation>D:\GitBuilds\Estranged.Lfs\Backup1\hosting\Estranged.Lfs.Hosting.Lambda\</UpgradeBackupLocation>
+    <OldToolsVersion>15.0</OldToolsVersion>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Amazon.Lambda.AspNetCoreServer" Version="7.2.0" />
+    <PackageReference Include="Amazon.Lambda.AspNetCoreServer" Version="8.0.0" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\src\Estranged.Lfs.Adapter.Azure.Blob\Estranged.Lfs.Adapter.Azure.Blob.csproj" />
     <ProjectReference Include="..\..\src\Estranged.Lfs.Adapter.S3\Estranged.Lfs.Adapter.S3.csproj" />
@@ -17,5 +17,4 @@
     <ProjectReference Include="..\..\src\Estranged.Lfs.Authenticator.BitBucket\Estranged.Lfs.Authenticator.BitBucket.csproj" />
     <ProjectReference Include="..\..\src\Estranged.Lfs.Authenticator.GitHub\Estranged.Lfs.Authenticator.GitHub.csproj" />
   </ItemGroup>
-
 </Project>

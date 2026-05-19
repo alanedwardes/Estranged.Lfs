@@ -1,8 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
     <Version>5.0.0</Version>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Authors>alanedwardes</Authors>
     <Description>A GitHub authentication adapter for Estranged.Lfs.Api.</Description>
     <PackageId>Estranged.Lfs.Authenticator.GitHub</PackageId>
@@ -11,14 +10,14 @@
     <AssemblyName>Estranged.Lfs.Authenticator.GitHub</AssemblyName>
     <RootNamespace>Estranged.Lfs.Authenticator.GitHub</RootNamespace>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <FileUpgradeFlags>40</FileUpgradeFlags>
+    <UpgradeBackupLocation>D:\GitBuilds\Estranged.Lfs\Backup1\src\Estranged.Lfs.Authenticator.GitHub\</UpgradeBackupLocation>
+    <OldToolsVersion>15.0</OldToolsVersion>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Octokit" Version="1.0.0" />
+    <PackageReference Include="Octokit" Version="5.0.0" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Estranged.Lfs.Data\Estranged.Lfs.Data.csproj" />
   </ItemGroup>
-
 </Project>

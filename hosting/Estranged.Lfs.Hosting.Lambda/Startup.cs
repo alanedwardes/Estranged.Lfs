@@ -27,8 +27,17 @@ namespace Estranged.Lfs.Hosting.Lambda
             const string BitBucketWorkspaceVariable = "BITBUCKET_WORKSPACE";
             const string BitBucketRepositoryVariable = "BITBUCKET_REPOSITORY";
             const string S3AccelerationVariable = "S3_ACCELERATION";
+            const string S3Region = "S3_REGION";
+            const string S3ServiceURL = "S3_SERVICE_URL";
+            const string S3AccessKey = "S3_ACCESS_KEY";
+            const string S3AccessSecret = "S3_ACCESS_SECRET";
+
             const string LfsAzureStorageConnectionStringVariable = "LFS_AZUREBLOB_CONNECTIONSTRING";
             const string LfsAzureStorageContainerNameVariable = "LFS_AZUREBLOB_CONTAINERNAME";
+            const string S3ServiceURL = "S3_SERVICE_URL";
+            const string S3Region = "S3_REGION";
+            const string S3AccessKey = "S3_ACCESS_KEY";
+            const string S3AccessSecret = "S3_ACCESS_SECRET";
 
             var config = new ConfigurationBuilder()
                 .AddEnvironmentVariables()
@@ -43,6 +52,10 @@ namespace Estranged.Lfs.Hosting.Lambda
             string bitBucketWorkspace = config[BitBucketWorkspaceVariable];
             string bitBucketRepository = config[BitBucketRepositoryVariable];
             bool s3Acceleration = bool.Parse(config[S3AccelerationVariable] ?? "false");
+            string s3ServiceURL = config[S3ServiceURL];
+            string s3Region = config[S3Region];
+            string s3AccessKey = config[S3AccessKey];
+            string s3AccessSecret = config[S3AccessSecret];
 
             bool isS3Storage = !string.IsNullOrWhiteSpace(lfsBucket);
             bool isAzureStorage = !string.IsNullOrWhiteSpace(lfsAzureStorageConnectionString);
@@ -51,10 +64,10 @@ namespace Estranged.Lfs.Hosting.Lambda
             bool isBitBucketAuthentication = !string.IsNullOrWhiteSpace(bitBucketWorkspace) && !string.IsNullOrWhiteSpace(bitBucketRepository);
 
             // If all authentication mechanims are set, or none are set throw an error
-            if (new[] {isDictionaryAuthentication, isGitHubAuthentication, isBitBucketAuthentication}.Count(x => x) != 1)
+            if (new[] { isDictionaryAuthentication, isGitHubAuthentication, isBitBucketAuthentication }.Count(x => x) != 1)
             {
-                throw new InvalidOperationException($"Unable to detect authentication mechanism. Please set {LfsUsernameVariable} and {LfsPasswordVariable} for simple user/password auth" +
-                                                    $" or {GitHubOrganisationVariable} and {GitHubRepositoryVariable} for authentication against that repository on GitHub");
+                throw new InvalidOperationException($"Unable to detect authentication mechanism. Please set either {LfsUsernameVariable} and {LfsPasswordVariable} for simple user/password auth" +
+                                                    $" or {GitHubOrganisationVariable} or {GitHubRepositoryVariable} for authentication against that repository on GitHub or {BitBucketWorkspaceVariable} or {BitBucketRepositoryVariable} for authentication against that repository on Bitbucket");
             }
 
             if (isDictionaryAuthentication)
@@ -74,7 +87,15 @@ namespace Estranged.Lfs.Hosting.Lambda
 
             if (isS3Storage)
             {
-                services.AddLfsS3Adapter(new S3BlobAdapterConfig { Bucket = lfsBucket }, new AmazonS3Client(new AmazonS3Config { UseAccelerateEndpoint = s3Acceleration }));
+                if (!string.IsNullOrWhiteSpace(s3ServiceURL) && !string.IsNullOrWhiteSpace(s3Region) && !string.IsNullOrWhiteSpace(s3AccessKey) && !string.IsNullOrWhiteSpace(s3AccessSecret))
+                {
+                    services.AddLfsS3Adapter(new S3BlobAdapterConfig { Bucket = lfsBucket }, new AmazonS3Client(s3AccessKey, s3AccessSecret, new AmazonS3Config { UseAccelerateEndpoint = s3Acceleration, ServiceURL = s3ServiceURL, AuthenticationRegion = s3Region, SignatureVersion = "V4" }));
+
+                }
+                else
+                {
+                    services.AddLfsS3Adapter(new S3BlobAdapterConfig { Bucket = lfsBucket }, new AmazonS3Client(new AmazonS3Config { UseAccelerateEndpoint = s3Acceleration }));
+                }
             }
             else if (isAzureStorage)
             {
