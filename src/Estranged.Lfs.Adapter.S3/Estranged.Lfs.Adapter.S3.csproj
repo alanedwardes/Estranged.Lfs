@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>5.0.0</Version>
-    <TargetFramework>net8.0</TargetFramework>
+    <Version>6.0.0</Version>
+    <TargetFramework>net10.0</TargetFramework>
     <Authors>alanedwardes</Authors>
     <Description>An S3 adapter for Estranged.Lfs.Api.</Description>
     <PackageId>Estranged.Lfs.Adapter.S3</PackageId>
@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.S3" Version="3.7.9.30" />
+    <PackageReference Include="AWSSDK.S3" Version="4.0.100.3" />
   </ItemGroup>
 
   <ItemGroup>

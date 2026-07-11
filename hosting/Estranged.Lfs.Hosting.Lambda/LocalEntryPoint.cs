@@ -1,5 +1,6 @@
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Estranged.Lfs.Hosting.Lambda
 {
@@ -7,13 +8,15 @@ namespace Estranged.Lfs.Hosting.Lambda
     {
         public static void Main(string[] args)
         {
-            var host = new WebHostBuilder()
-                .UseKestrel()
-                .UseIISIntegration()
-                .UseStartup<Startup>()
-                .Build();
+            var builder = WebApplication.CreateBuilder(args);
 
-            host.Run();
+            var startup = new Startup();
+            startup.ConfigureServices(builder.Services);
+
+            var app = builder.Build();
+            startup.Configure(app);
+
+            app.Run();
         }
     }
 }

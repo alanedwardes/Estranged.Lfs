@@ -1,4 +1,4 @@
-﻿using Estranged.Lfs.Authenticator.GitHub;
+using Estranged.Lfs.Authenticator.GitHub;
 using Estranged.Lfs.Data;
 using Moq;
 using Octokit;
@@ -16,9 +16,11 @@ namespace Estranged.Lfs.Tests.Authenticator.GitHub
 
         public void Dispose() => mockRepository.VerifyAll();
 
-        private class MockGitHubRepository : Repository
+        private static Repository CreateMockRepository(bool admin, bool canPush, bool canPull)
         {
-            public MockGitHubRepository(bool admin, bool canPush, bool canPull) => Permissions = new RepositoryPermissions(admin, admin, canPush, false, canPull);
+            var repo = new Repository();
+            typeof(Repository).GetProperty("Permissions")!.SetValue(repo, new RepositoryPermissions(admin, admin, canPush, false, canPull));
+            return repo;
         }
 
         [Fact]
@@ -31,7 +33,7 @@ namespace Estranged.Lfs.Tests.Authenticator.GitHub
                    .Returns(client.Object);
 
             client.Setup(x => x.Get("organisation", "repository"))
-                  .ReturnsAsync(new MockGitHubRepository(false, true, true));
+                  .ReturnsAsync(CreateMockRepository(false, true, true));
 
             var authenticator = new GitHubAuthenticator(new GitHubAuthenticatorConfig
             {
@@ -54,7 +56,7 @@ namespace Estranged.Lfs.Tests.Authenticator.GitHub
                    .Returns(client.Object);
 
             client.Setup(x => x.Get("organisation", "repository"))
-                  .ReturnsAsync(new MockGitHubRepository(false, false, true));
+                  .ReturnsAsync(CreateMockRepository(false, false, true));
 
             var authenticator = new GitHubAuthenticator(new GitHubAuthenticatorConfig
             {
