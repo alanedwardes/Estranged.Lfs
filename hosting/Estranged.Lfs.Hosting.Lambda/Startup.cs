@@ -27,6 +27,7 @@ namespace Estranged.Lfs.Hosting.Lambda
             const string BitBucketWorkspaceVariable = "BITBUCKET_WORKSPACE";
             const string BitBucketRepositoryVariable = "BITBUCKET_REPOSITORY";
             const string S3AccelerationVariable = "S3_ACCELERATION";
+            const string LfsCloudFrontDomainVariable = "LFS_CLOUDFRONT_DOMAIN";
             const string LfsAzureStorageConnectionStringVariable = "LFS_AZUREBLOB_CONNECTIONSTRING";
             const string LfsAzureStorageContainerNameVariable = "LFS_AZUREBLOB_CONTAINERNAME";
 
@@ -43,6 +44,7 @@ namespace Estranged.Lfs.Hosting.Lambda
             string bitBucketWorkspace = config[BitBucketWorkspaceVariable];
             string bitBucketRepository = config[BitBucketRepositoryVariable];
             bool s3Acceleration = bool.Parse(config[S3AccelerationVariable] ?? "false");
+            string lfsCloudFrontDomain = config[LfsCloudFrontDomainVariable];
 
             bool isS3Storage = !string.IsNullOrWhiteSpace(lfsBucket);
             bool isAzureStorage = !string.IsNullOrWhiteSpace(lfsAzureStorageConnectionString);
@@ -74,7 +76,7 @@ namespace Estranged.Lfs.Hosting.Lambda
 
             if (isS3Storage)
             {
-                services.AddLfsS3Adapter(new S3BlobAdapterConfig { Bucket = lfsBucket }, new AmazonS3Client(new AmazonS3Config { UseAccelerateEndpoint = s3Acceleration }));
+                services.AddLfsS3Adapter(new S3BlobAdapterConfig { Bucket = lfsBucket, CloudFrontDomain = lfsCloudFrontDomain }, new AmazonS3Client(new AmazonS3Config { UseAccelerateEndpoint = s3Acceleration }));
             }
             else if (isAzureStorage)
             {

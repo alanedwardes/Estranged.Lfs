@@ -31,7 +31,14 @@ namespace Estranged.Lfs.Adapter.S3
                 Expires = DateTime.UtcNow + config.Expiry
             };
 
-            return new Uri(client.GetPreSignedURL(request));
+            var uri = new Uri(client.GetPreSignedURL(request));
+
+            if (!string.IsNullOrWhiteSpace(config.CloudFrontDomain))
+            {
+                uri = new UriBuilder(uri) { Host = config.CloudFrontDomain }.Uri;
+            }
+
+            return uri;
         }
 
         public async Task<SignedBlob> UriForDownload(string oid, CancellationToken token)

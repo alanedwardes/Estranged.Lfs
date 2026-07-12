@@ -7,5 +7,6 @@ namespace Estranged.Lfs.Adapter.S3
         public string Bucket { get; set; }
         public string KeyPrefix { get; set; }
         public TimeSpan Expiry { get; set; } = TimeSpan.FromHours(1);
+        public string CloudFrontDomain { get; set; }
     }
 }
