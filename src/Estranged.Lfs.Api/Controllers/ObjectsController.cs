@@ -2,7 +2,6 @@
 using Estranged.Lfs.Data;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -27,7 +26,7 @@ namespace Estranged.Lfs.Api.Controllers
             {
                 return new BatchResponse
                 {
-                    Transfer = request.Transfers.First(),
+                    Transfer = "basic",
                     Objects = await objectManager.UploadObjects(request.Objects, GenerateTimeoutToken())
                                                  .ConfigureAwait(false)
                 };
@@ -37,7 +36,7 @@ namespace Estranged.Lfs.Api.Controllers
             {
                 return new BatchResponse
                 {
-                    Transfer = request.Transfers.First(),
+                    Transfer = "basic",
                     Objects = await objectManager.DownloadObjects(request.Objects, GenerateTimeoutToken())
                                                  .ConfigureAwait(false)
                 };
